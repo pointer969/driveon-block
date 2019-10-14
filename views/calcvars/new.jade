@@ -1,0 +1,79 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Variáveis para cálculo
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Nova Variável para cálculo
+                    .card-body                                              
+                     != messages()
+                     form.form-horizontal(action='/calcvars/save', method='post')
+                        .form-group
+                          label.form-control-label(for='itemlbl') Variável
+                          .controls
+                            .input-group
+                              input#item.form-control(name='item',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='ProfileDescription') Descrição
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Default
+                          .controls
+                            .input-group
+                              input#defaultvalue.form-control(name='defaultvalue',size='16', type='text')  
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Mínimo
+                          .controls
+                            .input-group
+                              input#minvalue.form-control(name='minvalue',size='16', type='text') 
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Máximo
+                          .controls
+                            .input-group
+                              input#maxvalue.form-control(name='maxvalue',size='16', type='text')             
+                        .form-group
+                          label.form-control-label(for='calctype') Tipo de Cálculo
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='calctype')
+                               each ctype in calctypes
+                                option(value='#{ctype}') #{ctype}
+                        .form-group
+                          label.form-control-label(for='itemlbl') Tipo de variável
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='valtype')
+                                each vtype in valtypes
+                                 option(value='#{vtype}') #{vtype}    
+                        .form-group
+                          label.form-control-label(for='itemlbl') Index
+                          .controls
+                            .input-group
+                              select#indexno.form-control-sm(name='indexno')
+                                each idxs in indexno
+                                 option(value='#{idxs}') #{idxs}                                                                            
+                        .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          span
+                          a(href='/calcvars') 
+                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

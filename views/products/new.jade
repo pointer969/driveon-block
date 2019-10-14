@@ -1,0 +1,70 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Product
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New Product
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/products/save', method='post')
+                        .form-group
+                          label.form-control-label(for='product') Product
+                          .controls
+                            .input-group
+                              input#product.form-control(name='product',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='200', type='text')  
+                        .form-group
+                          label.form-control-label(for='standard_uom') UOM
+                          .controls
+                            .input-group
+                              input#standard_uom.form-control(name='standard_uom',size='20', type='text') 
+                        .form-group
+                          label.form-control-label(for='sales_uom') Sales UOM
+                          .controls
+                            .input-group
+                              input#sales_uom.form-control(name='sales_uom',size='20', type='text')     
+                        .form-group
+                          label.form-control-label(for='standard_packing') Standard Packing
+                          .controls
+                            .input-group
+                              input#standard_packing.form-control(name='standard_packing',size='20', type='text') 
+                        .form-group
+                          label.form-control-label(for='comments') Comments
+                          .controls
+                            .input-group
+                              textarea#comments.form-control(name='comments',rows='9',placeholder='Comments..') 
+                        .form-group
+                          label.form-control-label(for='Specieslbl') Species
+                          .controls
+                            .input-group
+                              select#species.form-control-sm(name='species')
+                                each species in specieslist
+                                  option(value='#{species.species}') #{species.description}                                                                                       
+                        .form-group
+                          label.form-control-label(for='activedYN') Activate?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/products') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

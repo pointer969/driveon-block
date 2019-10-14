@@ -1,0 +1,35 @@
+extends ../layout/default
+
+block header
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css', rel='stylesheet') 
+
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Drivers
+          li.breadcrumb-item Eventos
+          li.breadcrumb-item.active Alarmes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Alarmes Recentes
+                    .card-body
+                      != messages()                      
+                      .input-group
+                        if list
+                        select#vehicle.form-control-sm(name='vehicle',placeholder='Veiculos')
+                          each car in list
+                            option(value='#{car.device}') #{car.plate}  
+                        button#btnalarm.btn.btn-sm.btn-success(type='submit')
+                          i.fa.fa-search                                 
+                      .chart-wrapper
+                        div#visualization
+block scripts                 
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.1/moment-with-locales.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js')
+  script(src='/js/alarm-events.js')                          

@@ -1,0 +1,92 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configuration
+          li.breadcrumb-item Users
+          li.breadcrumb-item.active Details
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Users - Edit
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/users/update/#{users.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='fullname') Name
+                          .controls
+                            .input-group
+                              input#fullname.form-control(name='fullname',size='16', type='text',  value='#{users.fullname}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='email') e-mail
+                          .controls
+                            .input-group
+                              input#email.form-control(name='email',size='100', type='text',  value='#{users.email}', readonly=false)                                                           
+                        .form-group
+                          label.form-control-label(for='password') Password
+                          .controls
+                            .input-group
+                              input#password.form-control(name='password',size='16', type='password',  value='#{users.password}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='genderMF') Gender?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='gender')
+                                option(value='Masculino') Male
+                                option(value='Feminino') Female 
+                        .form-group
+                          label.form-control-label(for='profilelbl') Profile
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='profile')
+                                each prof in profiles
+                                  option(value='#{prof.userProfile}', selected=prof.userProfile==users.profile) #{prof.ProfileDescription}                                                                                       
+                        .form-group
+                          label.form-control-label(for='authlbl') Authority
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='authority')
+                                each auth in authorities
+                                  option(value='#{auth.id}', selected=auth.id==users.authority) #{auth.AuthorityDescription}  
+                        .form-group
+                          label.form-control-label(for='accountlbl') Customer
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='customer')
+                                each cust in customers
+                                  option(value='#{cust.id}', selected=cust.id==users.customer) #{cust.fullname}  
+                        .form-group
+                          label.form-control-label(for='tmzs') Time Zone
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='timezone')
+                                each timezn in tmz
+                                  option(value=timezn.utc, selected=users.timezone==timezn.utc) #{timezn.utc + ' ' + timezn.timezone}              
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active')
+                                option(value='true', selected=users.active == true) Yes
+                                option(value='false', selected=users.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{users.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Update   
+                          span     
+                          a(href='/users/show/#{users.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancel                               

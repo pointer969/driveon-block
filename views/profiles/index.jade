@@ -1,0 +1,52 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Perfil de Usuário
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Perfil de usuário
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Ações
+                            th Perfil
+                            th Descrição
+                            th Ativo
+                            th Criado em                             
+                            th Modificado em 
+                            th Modificado por                           
+                        tbody                                                  
+                             each profile in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
+                                      a(href='/profiles/edit/#{profile.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove
+                                td #{profile.userProfile}
+                                td #{profile.ProfileDescription} 
+                                td #{ativo = profile.active==true?'Sim':'Não' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}                                                                                              
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/profiles/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

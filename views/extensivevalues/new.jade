@@ -1,0 +1,52 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Extensive Value
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Extensive Value
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/extensivevalues/save', method='post')
+                        .form-group
+                          label.form-control-label(for='class') Class
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='class')
+                               if extvalueses
+                                each classes in extvalueses
+                                  option(value='#{classes.id}') #{classes.description}  
+                        .form-group
+                          label.form-control-label(for='value') Value
+                          .controls
+                            .input-group
+                              input#value.form-control(name='value',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text')                                                              
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            //- .col-md-9
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/extensivevalues') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

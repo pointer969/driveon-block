@@ -1,0 +1,53 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Variáveis para cálculo
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Variáveis para cálculo
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Ações
+                            th Item
+                            th Descrição
+                            th Ativo
+                            th Criado em                             
+                            th Modificado em 
+                            th Modificado por                            
+                        tbody                                                  
+                             each calcvars in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/calcvars/delete/#{calcvars.id}', method='post')                                      
+                                      a(href='/calcvars/edit/#{calcvars.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove
+                                td #{calcvars.item}
+                                td #{calcvars.description} 
+                                td #{ativo = calcvars.active==true?'Sim':'Não' }                                
+                                td #{formatDate(calcvars.createdAt)}                                
+                                td #{formatDate(calcvars.updatedAt)}
+                                td #{(calcvars.modifiedBy)}                                                                                              
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/calcvars/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

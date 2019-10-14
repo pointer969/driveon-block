@@ -1,0 +1,182 @@
+.sidebar
+        nav.sidebar-nav
+          ul.nav
+            li.nav-item
+              a.nav-link(href='/')
+                i.icon-chart
+                |  Dashboard 
+            li.nav-title
+              | Management
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-arrow-down-circle
+                |  Receive
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/receive/manual')
+                    i.icon-like
+                    |  by Manual   
+                li.nav-item
+                  a.nav-link(href='/receive/offflavorqc')
+                    i.icon-ban
+                    |  Off-Flavor    
+                li.nav-item
+                  a.nav-link(href='/receive/tempcontrol/places_receive')
+                    i.icon-fire
+                    |  Temperature QC         
+            li.nav-item
+              a.nav-link(href='/tagapp/lots')
+                i.icon-tag
+                |  Incomming QC  
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-refresh
+                |  Processing
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/watercontrol')
+                    i.icon-drop
+                    |  Water QC   
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/tempcontrol/places_processing')
+                    i.icon-fire
+                    |  Temperature QC    
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/goods/confirmation')
+                    i.icon-like
+                    |  Production Confirmation                  
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-layers
+                |  Storage
+              ul.nav-dropdown-items
+                  li.nav-item
+                    a.nav-link(href='/storage/tempcontrol/places_storage')
+                      i.icon-fire
+                      |  Temperature QC     
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-loop
+                |  Batch
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/batch/shipping')
+                    i.icon-basket-loaded
+                    | Shipping 
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-map
+                |  Transport
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/positions/new')
+                    i.icon-cursor
+                    | Add Positions   
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/processing/tracking')
+                    i.icon-feed
+                    |  Tracking    
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-location-pin
+                |  Delivery
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/delivery/confirmation')
+                    i.icon-check
+                    | Confirmation         
+            li.nav-item
+              a.nav-link(href='/documents')
+                i.icon-docs
+                |  Compliance Files 
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-shield
+                |  Security
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='#')
+                    i.icon-lock-locked
+                    | Blockchain  
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-star
+                |  Report
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/report/pivot')
+                    i.icon-graph
+                    |  Pivot Table                         
+            li.divider
+            li.nav-title
+              | Settings
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-settings
+                |  Configuration
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/users', target='_top')
+                    i.icon-user
+                    |  Users                                
+                li.nav-item.nav-dropdown
+                  a.nav-link.nav-dropdown-toggle(href='#')
+                    i.icon-compass
+                    |  TAG
+                  ul.nav-dropdown-items
+                    li.nav-item
+                      a.nav-link(href='/devices/new')
+                        i.icon-arrow-up-circle
+                        |  Register
+                    li.nav-item
+                      a.nav-link(href='/devices')
+                        i.icon-refresh
+                        |  Activation   
+                    li.nav-item
+                      a.nav-link(href='/devices/setup')
+                        i.icon-reload
+                        |  Setup               
+                li.nav-item.nav-dropdown
+                  a.nav-link.nav-dropdown-toggle(href='#')
+                    i.icon-list
+                    |  Master Data
+                  ul.nav-dropdown-items
+                    li.nav-item
+                      a.nav-link(href='/products')
+                        i.icon-target
+                        |  Products   
+                    li.nav-item
+                      a.nav-link(href='/profiles')
+                        i.icon-equalizer
+                        |  Profiles
+                    li.nav-item
+                      a.nav-link(href='/suppliers')
+                        i.icon-basket-loaded
+                        |  Suppliers 
+                    li.nav-item
+                      a.nav-link(href='/customers')
+                        i.icon-people
+                        |  Customers      
+                    li.nav-item
+                      a.nav-link(href='/vehicles')
+                        i.icon-energy
+                        |  Vehicles  
+                    li.nav-item
+                      a.nav-link(href='/drivers')
+                        i.icon-user-following
+                        |  Drivers             
+                    li.nav-item
+                      a.nav-link(href='/authorities')
+                        i.icon-anchor
+                        |  Authority    
+                    li.nav-item
+                      a.nav-link(href='/extclasses')
+                        i.icon-note
+                        |  Extensive Classes    
+                    li.nav-item
+                      a.nav-link(href='/extensivevalues')
+                        i.icon-envelope-open
+                        |  Flex Values      

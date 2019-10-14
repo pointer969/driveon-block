@@ -1,0 +1,31 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='DriveOn White Label Platform')
+    meta(name='author', content='DriveOn Devs')    
+    title= 'Temp  user register'    
+    link(rel='apple-touch-icon', sizes='180x180', href='img/favicon.png')
+    link(rel='icon', type='image/png', sizes='32x32', href='img/favicon.png')
+    link(rel='icon', type='image/png', sizes='16x16', href='img/favicon.png')
+    link(rel='manifest', href='/manifest.json')
+    link(rel='mask-icon', href='/safari-pinned-tab.svg', color='#5bbad5')
+    meta(name='theme-color', content='#ffffff')
+    
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') 
+    
+    link(href='css/initstyle.css', rel='stylesheet')
+    link(href='css/style.css', rel='stylesheet')
+    script(src='bower_components/popper.js/dist/umd/popper.min.js')  
+    script(src='bower_components/jquery/dist/jquery.min.js')
+  body.app.flex-row.align-items-center(onload="document.getElementById('fullname').focus();")
+    .container
+        form.form-signin(role='form', action="/register",method="post", style='max-width: 300px;')
+          h2.form-signin-heading Sign Up 
+          input.form-control(type='text', name="fullname", placeholder='Nome Completo')
+          input.form-control(type='text', name="email", placeholder='Email')
+          input.form-control(type='password', name="password", placeholder='Senha')
+          button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign Up

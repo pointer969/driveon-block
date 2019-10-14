@@ -1,0 +1,82 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Risco
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Zonas de Risco - Edição
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/georisks/update/#{georisks.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='mapid') Map ID
+                          .controls
+                            .input-group
+                              input#mapid.form-control(name='mapid',size='10', type='text', value='#{georisks.mapid}', readonly=false )
+                        .form-group
+                          label.form-control-label(for='country') País
+                          .controls
+                            .input-group
+                              input#country.form-control(name='country',size='100', type='text', value='#{georisks.country}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='state') Estado
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='100', type='text', value='#{georisks.state}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='city') Cidade
+                          .controls
+                            .input-group
+                              input#city.form-control(name='city',size='100', type='text', value='#{georisks.city}', readonly=false )     
+                        .form-group
+                          label.form-control-label(for='district') Bairro
+                          .controls
+                            .input-group
+                              input#district.form-control(name='district',size='100', type='text', value='#{georisks.district}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='zone') Zona
+                          .controls
+                            .input-group
+                              input#zone.form-control(name='zone',size='100', type='text', value='#{georisks.zone}', readonly=false )
+                        .form-group
+                          label.form-control-label(for='risk') Risco
+                          .controls
+                            .input-group
+                              input#risk.form-control(name='risk',size='16', type='text', value='#{georisks.risk}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='points') Pontos
+                          .controls
+                            .input-group
+                              input#points.form-control(name='points',size='16', type='text', value='#{georisks.points}', readonly=false )    
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Ativo?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=georisks.active == true) Sim
+                                option(value='false', selected=georisks.active == false) Não
+                        .form-group
+                          label.form-control-label(for='createdAt') Criado em
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{georisks.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Atualizar   
+                          span     
+                          a(href='/georisks/show/#{georisks.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancelar                               

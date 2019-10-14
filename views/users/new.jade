@@ -1,0 +1,82 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item.active Users
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Users
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/users/save', method='post')
+                        .form-group
+                          label.form-control-label(for='fullname') Name
+                          .controls
+                            .input-group
+                              input#fullname.form-control(name='fullname',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='email') e-mail
+                          .controls
+                            .input-group
+                              input#email.form-control(name='email',size='100', type='text')                                                              
+                        .form-group
+                          label.form-control-label(for='password') Password
+                          .controls
+                            .input-group
+                              input#password.form-control(name='password',size='16', type='password')  
+                        .form-group
+                          label.form-control-label(for='genderMF') Gender?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='gender')
+                                option(value='Masculino') Male
+                                option(value='Feminino') Female 
+                        .form-group
+                          label.form-control-label(for='profilelbl') Profile
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='profile')
+                                each prof in profiles
+                                  option(value='#{prof.userProfile}') #{prof.ProfileDescription}                                                                                       
+                        .form-group
+                          label.form-control-label(for='authlbl') Authority
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='authority')
+                                each auth in authorities
+                                  option(value='#{auth.id}') #{auth.AuthorityDescription}  
+                        .form-group
+                          label.form-control-label(for='accountlbl') Customer
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='customer')
+                                each cust in customers
+                                  option(value='#{cust.id}') #{cust.fullname} 
+                        .form-group
+                          label.form-control-label(for='tmzs') Time Zone
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='timezone')
+                                each timezn in tmz
+                                  option(value='#{timezn.utc}') #{timezn.utc + ' ' + timezn.timezone}             
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No          
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/users') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

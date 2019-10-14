@@ -1,0 +1,102 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Veículos
+          li.breadcrumb-item.active Detalhes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Veículos - Edição
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/vehicles/update/#{vehicles.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='plate') Placa
+                          .controls
+                            .input-group
+                              input#plate.form-control(name='plate',size='100', type='text', value='#{vehicles.plate}', readonly=false)
+                        if (devices)      
+                          .form-group
+                            label.form-control-label(for='profilelbl') Device
+                            .controls
+                              .input-group
+                                select#select.form-control-sm(name='device')
+                                  - var vehicldevice = vehicles.device.device;                              
+                                  each device in devices
+                                    - var devid = device.id;
+                                    - var devnm = device.device;
+                                    option(value=devid, selected= vehicldevice==devnm) #{devnm}  
+                        if (customers)             
+                          .form-group
+                            label.form-control-label(for='profilelbl') Conta
+                            .controls
+                              .input-group
+                                - var deciceaccount = vehicles.customer.id;
+                                select#select.form-control-sm(name='customer')
+                                  each customer in customers
+                                    option(value='#{customer.id}', selected=deciceaccount==customer.id) #{customer.businesscode} - #{customer.fullname}            
+                        .form-group
+                          label.form-control-label(for='businesscode') Chassis
+                          .controls
+                            .input-group
+                              input#vin.form-control(name='vin',size='20', type='text', value='#{vehicles.vin}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='address1') Modelo
+                          .controls
+                            .input-group
+                              input#model.form-control(name='model',size='100', type='text', value='#{vehicles.model}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='address2') Cor
+                          .controls
+                            .input-group
+                              input#color.form-control(name='color',size='100', type='text', value='#{vehicles.color}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='zipcode') Estado
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='16', type='text', value='#{vehicles.state}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='district') Motor
+                          .controls
+                            .input-group
+                              input#motor.form-control(name='motor',size='100', type='text', value='#{vehicles.motor}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='city') Combustível
+                          .controls
+                            .input-group
+                              input#fueltype.form-control(name='fueltype',size='16', type='text', value='#{vehicles.fueltype}', readonly=false)                                    
+                        .form-group
+                          label.form-control-label(for='province') Ano de Fabricação
+                          .controls
+                            .input-group
+                              input#manufYear.form-control(name='manufYear',size='16', type='text', value='#{vehicles.manufYear}', readonly=false)  
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=vehicles.active == true) Sim
+                                option(value='false', selected=vehicles.active == false) Não
+                        .form-group
+                          label.form-control-label(for='createdAt') Criado em
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{vehicles.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Atualizar   
+                          span     
+                          a(href='/vehicles/show/#{vehicles.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancelar                               

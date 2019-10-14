@@ -1,0 +1,19 @@
+extends ../layout/default
+
+block header
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.23.0/pivot.min.css', rel='stylesheet')
+
+block scripts
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.23.0/pivot.min.js')
+              
+  script(src='/js/pivot.js')  
+
+block content
+  main.main        
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Report
+          li.breadcrumb-item.active Pivot Table
+        .container-fluid                    
+          div#output(style='height:800px;')

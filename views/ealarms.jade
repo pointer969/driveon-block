@@ -1,0 +1,32 @@
+extends layout
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Drivers
+          li.breadcrumb-item Eventos
+          li.breadcrumb-item.active Alarmes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Alarmes
+                    .card-body
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Alarme
+                            th Data
+                            th Condição
+                        tbody
+                          tr
+                            td #{alarmes.alarmNo}
+                            td #{alarmes.rtcTime}
+                            td 
+                              span.badge.badge-success #{alarmes.alarmTag}
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)

@@ -1,0 +1,65 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+  script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAQqvk0uMN9m6V0GMjelG_lySoAaAGZJqM&callback=initMap')
+
+block content
+  main.main
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Transport
+          li.breadcrumb-item.active Tracking
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-qrcode
+                      |  Tracking
+                    .card-body 
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button',onclick='getPositionsBySO()')
+                                  i.fa.fa-search
+                                  |  TAG
+                              input#tag.form-control(type='text ', name='tag', placeholder='Lot')  
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.icon-map
+                      |  Trace
+                    .card-body                                              
+                          #map(style='height: 425px;')   
+                          script.
+                            function initMap() {
+                                //- var localcity = new google.maps.LatLng(41.850, -87.650);
+
+                                //- var map = new google.maps.Map(document.getElementById('map'), {
+                                //-   center: localcity,
+                                //-   zoom: 12
+                                //- });
+                                getLocation()
+                            }
+
+                            function getLocation() {
+                              if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(showPosition);
+                              } 
+                            }
+
+                            function showPosition(position) {
+
+                                var localcity = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                  center: localcity,
+                                  zoom: 14
+                                });
+                            }
+              //-     .form-actions                          
+              //-       a(href='/processing/transport/print') 
+              //-         button.btn.btn-sm.secondary(type='button') Print                                                                                  

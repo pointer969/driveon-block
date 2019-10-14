@@ -1,0 +1,132 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+
+block content
+  main.main
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item.active Incomming QC (Lakes)
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-qrcode
+                      |  Incomming QC (Lakes) - Compliance Hint (Sheet 22) 
+                    .card-body 
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button',onclick='getLotByTAGOF()')
+                                  i.fa.fa-search
+                                  |  Search
+                              input#tag.form-control(type='text ', name='tag', placeholder='TAG')  
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-info
+                      |  Lot Info.
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='#', method='post')
+                         input#lotno.form-control(name='lotno', type='hidden')
+                         input#product.form-control(name='product', type='hidden')
+                        .form-group
+                          label.form-control-label(for='lotnm') Lot No
+                          .controls
+                            .input-group
+                              input#lotnm.form-control(name='lotnm',size='100', type='text',readonly=true)
+                        .form-group
+                          label.form-control-label(for='pproduct') Product
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text',readonly=true) 
+                        .form-group
+                          label.form-control-label(for='tank') Fish Tank
+                          .controls
+                            .input-group
+                              input#tank.form-control(name='tank',size='100', type='text',readonly=true)
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Quality Aspects (N/NC)
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/tagapp/lots/save', method='post')                        
+                        input#lotid.form-control(name='lotid', type='hidden')
+                        input#product.form-control(name='product', type='hidden')
+                        input#tank.form-control(name='tank', type='hidden') 
+                        .form-group
+                          label.form-control-label(for='llot') Eyes
+                          .controls
+                            .input-group
+                              select#eyes.form-control-sm(name='eyes')
+                                option(value='C') Conforming
+                                option(value='NC') Non-Conforming  
+                            label.form-control-label(for='qcyescomments') Comments
+                            .input-group
+                              input#qcyescomments.form-control(name='qcyescomments',size='100', type='text',readonly=false)                                  
+                        .form-group
+                          label.form-control-label(for='gills') Gills
+                          .controls
+                            .input-group
+                              select#gills.form-control-sm(name='gills')
+                                option(value='C') Conforming
+                                option(value='NC') Non-Conforming  
+                            label.form-control-label(for='qcgillscomments') Comments
+                            .input-group
+                              input#qcyescomments.form-control(name='qcgillscomments',size='100', type='text',readonly=false)                                      
+                        .form-group
+                          label.form-control-label(for='belly') Belly
+                          .controls
+                            .input-group
+                              select#belly.form-control-sm(name='belly')
+                                option(value='C') Conforming
+                                option(value='NC') Non-Conforming  
+                            label.form-control-label(for='qcbellycomments') Comments
+                            .input-group
+                              input#qcyescomments.form-control(name='qcbellycomments',size='100', type='text',readonly=false)      
+                        .form-group
+                          label.form-control-label(for='scales') Fish scales
+                          .controls
+                            .input-group
+                              select#scales.form-control-sm(name='scales')
+                                option(value='C') Conforming
+                                option(value='NC') Non-Conforming
+                            label.form-control-label(for='qcscalescomments') Comments
+                            .input-group
+                              input#qcyescomments.form-control(name='qcscalescomments',size='100', type='text',readonly=false)                                                                             
+                        .card.card-accent-primary
+                          .card-header
+                            | Quality Actions
+                          .card-body    
+                            .form-group
+                               label.form-control-label(for='nonreport') Any Non-Confirming to report
+                              .controls
+                                .input-group
+                                  input#nonreport.form-control(name='nonreport',size='100', type='text',readonly=false)  
+                            .form-group
+                               label.form-control-label(for='qcaction') Corrective Action
+                              .controls
+                                .input-group
+                                  input#qcaction.form-control(name='qcaction',size='100', type='text',readonly=false) 
+                            .form-group
+                               label.form-control-label(for='qcverification') Verification (N/NC)
+                              .controls
+                                .input-group
+                                  input#qcverification.form-control(name='qcverification',size='100', type='text',readonly=false)   
+                            .form-group
+                               label.form-control-label(for='qcprevent') Preventive Action
+                              .controls
+                                .input-group
+                                  input#qcprevent.form-control(name='qcprevent',size='100', type='text',readonly=false)      
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/tagapp/lots') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                                  

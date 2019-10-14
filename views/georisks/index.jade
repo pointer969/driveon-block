@@ -1,0 +1,53 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Risco
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Zonas de Risco
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Ações
+                            th Map Id
+                            th País
+                            th Estado
+                            th Cidade                            
+                            th Bairro
+                            th Zona                            
+                        tbody                                                  
+                             each georisk in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/georisks/delete/#{georisk.id}', method='post')                                      
+                                      a(href='/georisks/edit/#{georisk.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{georisk.mapid}
+                                td #{georisk.country}
+                                td #{georisk.state}
+                                td #{georisk.city}
+                                td #{georisk.district}
+                                td #{georisk.zone}                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/georisks/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

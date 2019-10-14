@@ -1,0 +1,62 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item.active Water Quality Control
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card.card-accent-info
+                    .card-header
+                      | Legend
+                    .card-body
+                        p
+                          b Conforming (C)
+                          |  (Chlorine equal 5 ppm)
+                        p
+                          b Non-Conforming (NC)
+                          |  (Chlorine above or below 5 ppm)
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Water Quality Control
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Date
+                            th Time
+                            th Place
+                            th pH                            
+                            th Cloro (ppm)
+                            th Status                            
+                        tbody                                                  
+                             each wqc in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/processing/watercontrol/delete/#{wqc.id}', method='post')                                      
+                                      a(href='/processing/watercontrol/edit/#{wqc.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{wqc.date}
+                                td #{wqc.time}
+                                td #{wqc.placeid}
+                                td #{wqc.ph}
+                                td #{wqc.cloroppm}
+                                td #{wqc.status}                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/processing/watercontrol/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

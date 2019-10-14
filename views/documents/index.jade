@@ -1,0 +1,55 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item.active Compliance Files
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Compliance Files
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th File 
+                            th Comments                          
+                            th Active                            
+                        tbody                                                  
+                             each document in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/documents/delete/#{document.id}', method='post')                                      
+                                      a(href='/documents/edit/#{document.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove                                 
+                                if (document.path) 
+                                  td 
+                                    .col.s3
+                                      if (document.document_type != 'application/pdf')
+                                        img.responsive-img(src="#{document.path}", alt='image')
+                                      else                                        
+                                        a(href='#{document.path}',download='')
+                                          i.fa.fa-file-pdf-o(alt='#{document.document_title}')
+                                      p.center-align.caption #{document.document_title} 
+                                 else
+                                  td No Image   
+                                td #{document.comments}  
+                                td #{ativo = document.active==true?'Yes':'No' }                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/documents/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

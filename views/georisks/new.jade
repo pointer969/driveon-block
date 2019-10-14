@@ -1,0 +1,73 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Risco
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Nova Zona de Risco
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/georisks/save', method='post')
+                        .form-group
+                          label.form-control-label(for='mapid') Map ID
+                          .controls
+                            .input-group
+                              input#mapid.form-control(name='mapid',size='10', type='text')
+                        .form-group
+                          label.form-control-label(for='country') País
+                          .controls
+                            .input-group
+                              input#country.form-control(name='country',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='state') Estado
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='city') Cidade
+                          .controls
+                            .input-group
+                              input#city.form-control(name='city',size='100', type='text')     
+                        .form-group
+                          label.form-control-label(for='district') Bairro
+                          .controls
+                            .input-group
+                              input#district.form-control(name='district',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='zone') Zona
+                          .controls
+                            .input-group
+                              input#zone.form-control(name='zone',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='risk') Risco
+                          .controls
+                            .input-group
+                              input#risk.form-control(name='risk',size='16', type='text') 
+                        .form-group
+                          label.form-control-label(for='points') Pontos
+                          .controls
+                            .input-group
+                              input#points.form-control(name='points',size='16', type='text')                                                                                                                  
+                        .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          span
+                          a(href='/georisks') 
+                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

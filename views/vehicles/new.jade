@@ -1,0 +1,87 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item.active Veiculos
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Novo Veiculo
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/vehicles/save', method='post')
+                        .form-group
+                          label.form-control-label(for='plate') Placa
+                          .controls
+                            .input-group
+                              input#plate.form-control(name='plate',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='profilelbl') Device
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='device')
+                                each device in devices
+                                  option(value='#{device.id}') #{device.device}  
+                        .form-group
+                          label.form-control-label(for='profilelbl') Conta
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='customer')
+                                each customer in customers
+                                  option(value='#{customer.id}') #{customer.businesscode} - #{customer.fullname}            
+                        .form-group
+                          label.form-control-label(for='businesscode') Chassis
+                          .controls
+                            .input-group
+                              input#vin.form-control(name='vin',size='20', type='text')
+                        .form-group
+                          label.form-control-label(for='address1') Modelo
+                          .controls
+                            .input-group
+                              input#model.form-control(name='model',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='address2') Cor
+                          .controls
+                            .input-group
+                              input#color.form-control(name='color',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='zipcode') Estado
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='district') Motor
+                          .controls
+                            .input-group
+                              input#motor.form-control(name='motor',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='city') Combustível
+                          .controls
+                            .input-group
+                              input#fueltype.form-control(name='fueltype',size='16', type='text')                                    
+                        .form-group
+                          label.form-control-label(for='province') Ano de Fabricação
+                          .controls
+                            .input-group
+                              input#manufYear.form-control(name='manufYear',size='16', type='text')                                                                                          
+                        .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            //- .col-md-9
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          span
+                          a(href='/vehicles') 
+                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

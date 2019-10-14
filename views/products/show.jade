@@ -1,0 +1,82 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Product
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Product - Details
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/products/delete/#{products.id}', method='post') 
+                        .form-group
+                          label.form-control-label(for='product') Product
+                          .controls
+                            .input-group                              
+                              input#product.form-control(name='product',size='100',type='text', value='#{products.product}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text', value='#{products.descriptio}', readonly=true)  
+                        .form-group
+                          label.form-control-label(for='standard_uom') UOM
+                          .controls
+                            .input-group
+                              input#standard_uom.form-control(name='standard_uom',size='100', type='text', value='#{products.standard_uom}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='sales_uom') Sales UOM
+                          .controls
+                            .input-group
+                              input#sales_uom.form-control(name='sales_uom',size='50', type='text', value='#{products.sales_uom}', readonly=true)      
+                        .form-group
+                          label.form-control-label(for='standard_packing') Standard Packing
+                          .controls
+                            .input-group
+                              input#standard_packing.form-control(name='standard_packing',size='100', type='text', value='#{products.standard_packing}', readonly=true)  
+                        .form-group
+                          label.form-control-label(for='comments') Comments
+                          .controls
+                            .input-group
+                              input#comments.form-control(name='comments',size='100', type='text', value='#{products.comments}', readonly=true)  
+                        .form-group
+                          label.form-control-label(for='Specieslbl') Species
+                          .controls
+                            .input-group
+                              input#species.form-control(name='species',size='100', type='text', value='#{products.species}', readonly=true)  
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Active?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=products.active == true) Yes
+                                option(value='false', selected=products.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{products.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/products/edit/#{products.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/products')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to List                              

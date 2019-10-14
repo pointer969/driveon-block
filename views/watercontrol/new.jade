@@ -1,0 +1,94 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item.active Water Quality Control
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Water Quality Control
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/processing/watercontrol/save', method='post')
+                        .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              #date.input-group.date
+                                input.form-control(type='text',name='date')
+                                span.input-group-addon
+                                  span.fa.fa-calendar
+                              script(type='text/javascript').
+                                $(function () {
+                                  $('#date').datetimepicker({
+                                    format: 'L',
+                                    icons: {
+                                        time: "fa fa-clock-o",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down"
+                                    }
+                                  });
+                                });
+                        .form-group
+                          label.form-control-label(for='time') Time
+                          .controls
+                            .input-group
+                              #time.input-group.date
+                                input.form-control(type='text', name='time')
+                                span.input-group-addon
+                                  span.fa.fa-calendar
+                              script(type='text/javascript').
+                                $(function () {
+                                  $('#time').datetimepicker({
+                                    format: 'LT',
+                                    icons: {
+                                        time: "fa fa-clock-o",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down"
+                                    }
+                                  });
+                                });  
+                        .form-group
+                          label.form-control-label(for='state') Place
+                          .controls
+                            .input-group
+                              input#placeid.form-control(name='placeid',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='ph') pH
+                          .controls
+                            .input-group
+                              input#ph.form-control(name='ph',size='100', type='text')     
+                        .form-group
+                          label.form-control-label(for='cloroppm') Cloro (PPM)
+                          .controls
+                            .input-group
+                              input#cloroppm.form-control(name='cloroppm',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='status') Status (C / NC)
+                          .controls
+                            .input-group
+                              select#status.form-control-sm(name='status')
+                                option(value='C') Conforming
+                                option(value='NC') Non-Conforming                                                                                                                                         
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/processing/watercontrol') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

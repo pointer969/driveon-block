@@ -1,0 +1,100 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item.active Suppliers
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New Supplier
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/suppliers/save', method='post')
+                        .form-group
+                          label.form-control-label(for='lsupplier') CPF / CNPJ
+                          .controls
+                            .input-group
+                              input#supplier.form-control(name='supplier',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='nname') Supplier Name
+                          .controls
+                            .input-group
+                              input#name.form-control(name='name',size='100', type='text')      
+                        .form-group
+                          label.form-control-label(for='email') eMail
+                          .controls
+                            .input-group
+                              input#email.form-control(name='email',size='100', type='email')
+                        .form-group
+                          label.form-control-label(for='commercialName') Business Name
+                          .controls
+                            .input-group
+                              input#commercialName.form-control(name='commercialName',size='20', type='text')
+                        .form-group
+                          label.form-control-label(for='activedYN') Segment?
+                          .controls
+                            .input-group
+                              select#business_segment.form-control-sm(name='business_segment')
+                                option(value='Farm') Farm
+                                option(value='Process') Process 
+                                option(value='Timber') Timber 
+                        .form-group
+                          label.form-control-label(for='statebusinesscode') State Tax Id.
+                          .controls
+                            .input-group
+                              input#statebusinesscode.form-control(name='statebusinesscode',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='address1') Address
+                          .controls
+                            .input-group
+                              input#address1.form-control(name='address1',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='address2') Address Complement
+                          .controls
+                            .input-group
+                              input#address2.form-control(name='address2',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='zipcode') ZIP
+                          .controls
+                            .input-group
+                              input#zipcode.form-control(name='zipcode',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='district') District
+                          .controls
+                            .input-group
+                              input#district.form-control(name='district',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='city') City
+                          .controls
+                            .input-group
+                              input#city.form-control(name='city',size='16', type='text')                                    
+                        .form-group
+                          label.form-control-label(for='province') State
+                          .controls
+                            .input-group
+                              input#province.form-control(name='province',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='country') Country
+                          .controls
+                            .input-group
+                              input#country.form-control(name='country',size='16', type='text')                                                                   
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            .input-group
+                              select#activeStatus.form-control-sm(name='activeStatus')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/suppliers') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

@@ -1,0 +1,44 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Perfil de Usuário
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Perfil de Usuário
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/profiles/save', method='post')
+                        .form-group
+                          label.form-control-label(for='userProfile') Perfil
+                          .controls
+                            .input-group
+                              input#userProfile.form-control(name='userProfile',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='ProfileDescription') Descrição
+                          .controls
+                            .input-group
+                              input#ProfileDescription.form-control(name='ProfileDescription',size='100', type='text')                                                              
+                        .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            //- .col-md-9
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          span
+                          a(href='/profiles') 
+                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

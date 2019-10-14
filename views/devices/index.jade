@@ -1,0 +1,52 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configuration
+          li.breadcrumb-item TAG
+          li.breadcrumb-item.active Activation
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  TAG Activation
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Action
+                            th TAG
+                            th Description
+                            th Activated
+                            th Created At                             
+                            th Modified At 
+                            th Modified By
+                            
+                        tbody                                                  
+                             each device in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/devices/delete/#{device.id}', method='post')                                      
+                                      a(href='/devices/edit/#{device.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{device.device}
+                                td #{device.description} 
+                                td #{ativo = device.active==true?'Yes':'No' }                                
+                                td #{formatDate(device.createdAt)}                                
+                                td #{formatDate(device.updatedAt)}
+                                td #{(device.modifiedBy)}                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  

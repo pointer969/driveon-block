@@ -1,0 +1,163 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Batch
+          li.breadcrumb-item.active Shipping (Lakes)  - Compliance Hint (Sheet 31 - Form E.1 20)
+        .container-fluid
+          .animated.fadeIn            
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-cube
+                      |  Shipping
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/sales/save', method='post')
+                        input#active(type='hidden', name='active')
+                        input#species(type='hidden', name='species')
+                        input#description(type='hidden', name='description')
+                        input#suppliernm(type='hidden', name='suppliernm')   
+                        input#serial(type='hidden', name='serial')                      
+                        .col-md-12.mb-8
+                          ul.nav.nav-tabs(role='tablist')
+                            li.nav-item
+                              a.nav-link.active.show(data-toggle='tab', href='#header', role='tab', aria-controls='header', aria-selected='true') Shipping Info.                           
+                            li.nav-item
+                              a.nav-link(data-toggle='tab', href='#quality', role='tab', aria-controls='quality', aria-selected='false') Quality                            
+                            li.nav-item
+                              a.nav-link(data-toggle='tab', href='#product', role='tab', aria-controls='product', aria-selected='false') Product
+                          .tab-content
+                            #header.tab-pane.active.show(role='tabpanel')
+                              .form-group
+                                label.form-control-label(for='lotno') Lot No
+                                .controls
+                                  .input-group
+                                    input#lotno.form-control(name='lotno',size='100', type='text',value='#{nextlot}')
+                              .form-group
+                                label.form-control-label(for='product') Product
+                                .controls
+                                  .input-group
+                                    select#product.form-control-sm(name='product')
+                                      option(value='') No Selection
+                                      if (products)
+                                        each product in products
+                                          option(value='#{product.product}') #{product.product} - #{product.species} - #{product.description} 
+                                    script(type='text/javascript').
+                                      $(document).ready(function(){
+                                          $('#product').on('change',function(){
+                                              var productfulldesc = $("#product option:selected").text().split(" - ",3);
+                                              $('#description').val(productfulldesc[2]);
+                                              $('#species').val(productfulldesc[1]);
+                                          });
+                                      });      
+                              .form-group
+                                label.form-control-label(for='status') Status
+                                .controls
+                                  .input-group
+                                    input#status.form-control(name='status',size='100', type='text', value='#{lotstatus}', readonly=true)   
+                            #quality.tab-pane(role='tabpanel')
+                             .card.card-accent-primary
+                              .card-header
+                                | Cargo Info
+                              .card-body    
+                                .form-group
+                                  label.form-control-label(for='drivername') Driver
+                                  .controls
+                                    .input-group
+                                      select#drivername.form-control-sm(name='drivername')
+                                        if (drivers)
+                                          each driver in drivers
+                                            option(value='#{driver.id}') #{driver.name} 
+                                .form-group
+                                  label.form-control-label(for='plate') Vehicle
+                                  .controls
+                                    .input-group
+                                      select#plate.form-control-sm(name='plate')
+                                        if (vehicles)
+                                          each vehicle in vehicles
+                                            option(value='#{vehicle.id}') #{vehicle.plate} 
+                                .form-group
+                                  label.form-control-label(for='suppliercity') Supplier Source
+                                  .controls
+                                    .input-group
+                                      select#suppliercity.form-control-sm(name='suppliercity', placeholder='City')
+                                        option(value='NIQUELANDIA-GO') NIQUELANDIA-GO   
+                                .form-group
+                                  label.form-control-label(for='supplier') Supplier
+                                  .controls
+                                    .input-group
+                                      select#supplier.form-control-sm(name='supplier') 
+                                        option(value='') No Selection
+                                        if (suppliers)
+                                          each supplier in suppliers
+                                            option(value='#{supplier.id}') #{supplier.name} 
+                                      script(type='text/javascript').
+                                        $(document).ready(function(){
+                                            $('#supplier').on('change',function(){
+                                                var supplierfulldesc = $("#supplier option:selected").text();
+                                                $('#suppliernm').val(supplierfulldesc);
+                                            });
+                                        });
+                                .col-md-2
+                                  .form-group
+                                    label.form-control-label(for='date') Expenditure Date
+                                    .controls
+                                      .input-group
+                                        #expdate.input-group.date
+                                          input.form-control(type='text',name='expdate')
+                                          span.input-group-addon
+                                            span.fa.fa-calendar
+                                        script(type='text/javascript').
+                                          $(function () {
+                                            $('#expdate').datetimepicker({
+                                              format: 'L',
+                                              icons: {
+                                                  time: "fa fa-clock-o",
+                                                  date: "fa fa-calendar",
+                                                  up: "fa fa-arrow-up",
+                                                  down: "fa fa-arrow-down"
+                                              }
+                                            });
+                                          });  
+                                .form-group
+                                  label.form-control-label(for='cargotype') Cargo Type
+                                  .controls
+                                    .input-group
+                                      select#cargotype.form-control-sm(name='cargotype')
+                                        option(value='TRANSFISH') Transfish  
+                                        option(value='ISOTHERMAL') Isothermal 
+                                .form-group
+                                  label.form-control-label(for='sanitybexpedit') Sanitary Condition before Expediture
+                                  .controls
+                                    .input-group
+                                      select#sanitybexpedit.form-control-sm(name='sanitybexpedit', placeholder='City')
+                                        option(value='SATISFIES') Satisfies 
+                                        option(value='NSATISFIES') Not Satisfies
+                            #product.tab-pane(role='tabpanel')
+                             .card.card-accent-primary
+                              .card-header
+                                | Serials
+                              .card-body    
+                                .form-group
+                                  label.form-control-label(for='serials') Add Serials
+                                  .controls
+                                    .input-group                                      
+                                      input#serialone.form-control-sm(name='serialone', type='text') 
+                                      button#btnaddserial.btn.btn-sm.secondary(name='btnaddserial',type='button',onclick='setSerialList()') Add   
+                                      button#btnaddserial.btn.btn-sm.warning(name='btndelserial',type='button',onclick='unsetSerialList()') Delete   
+                                    .input-group
+                                      select#seriallist.form-control-sm(name='seriallist',size='5', multiple='')                                           
+                                  
+                              .form-actions
+                                button.btn.btn-sm.primary(type='submit') Save
+                                span
+                                a(href='/receive/manual') 
+                                button.btn.btn-sm.secondary(type='button') Cancel                                                                                  

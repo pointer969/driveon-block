@@ -1,0 +1,46 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item.active Uses
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Users
+                    .card-body   
+                      != messages()                        
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Name
+                            th e-mail                            
+                            th Active                            
+                        tbody                                                                                                         
+                            each user in list                         
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/users/delete/#{user.id}', method='post')                                      
+                                      a(href='/users/edit/#{user.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove
+                                td #{user.fullname}
+                                td #{user.email}   
+                                td #{ativo = user.active==true?'Yes':'No' }     
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/users/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

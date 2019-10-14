@@ -1,0 +1,58 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item Autoridade de Usuário
+          li.breadcrumb-item.active Detalhes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Autoridade de Usuário - Detalhes
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/authorities/delete/#{authorities.id}', method='post') 
+                        .form-group
+                          label.form-control-label(for='userAuthority') Autoridade
+                          .controls
+                            .input-group
+                              input#userAuthority.form-control(size='16', type='text', value='#{authorities.userAuthority}', readonly=true)                       
+                        .form-group
+                          label.form-control-label(for='AuthorityDescription') Descrição
+                          .controls
+                            .input-group
+                              input#AuthorityDescription.form-control(size='100', type='text', value='#{authorities.AuthorityDescription}', readonly=true) 
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .col-md-9
+                              select#active.form-control(name='active', disabled=true)
+                                option(value='true', selected=authorities.active == true) Sim
+                                option(value='false', selected=authorities.active == false) Não
+                        .form-group
+                          label.form-control-label(for='createdAt') Criado em
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{authorities.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/authorities/edit/#{authorities.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Editar   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Deletar   
+                          span         
+                          a(href='/authorities')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Voltar a lista                               

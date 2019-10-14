@@ -1,0 +1,74 @@
+extends ../layout/default
+
+block content
+  main.main  
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item #{pdesc}
+          li.breadcrumb-item.active Temperature Quality Control    
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card.card-accent-info
+                    .card-header
+                      | Legend
+                    .card-body
+                        p
+                          b Storage Chamber 1 (Fresh)
+                          |  (0°C ~ 4°C)
+                        p
+                          b Storage Chambers 2 and 3 
+                          |  (-18°C ~ -25°C)
+                        p
+                          b Processing Room 
+                          |  (~ 15°C)
+                        p
+                          b Freezing Tunnel
+                          |  (-25°C ~ )     
+                        p
+                          b Minimun Sterilizer 
+                          |  (82°C ~ ) 
+                        p
+                          b Product
+                          |  ( ~ 7°C)   
+                        p
+                          b Reception Chamber
+                          |  ( ~ 4°C)     
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Temperature Quality Control
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Date
+                            th Time
+                            th Place
+                            th Temperature 
+                            th unit                            
+                        tbody                                                  
+                             each tqc in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/processing/tempcontrol/delete/#{tqc.id}', method='post')                                      
+                                      a(href='/processing/tempcontrol/edit/#{tqc.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{tqc.date}
+                                td #{tqc.time}
+                                td #{tqc.placeid}
+                                td #{tqc.temperature}
+                                td #{tqc.unit}                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/processing/tempcontrol/new/#{ptype}', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

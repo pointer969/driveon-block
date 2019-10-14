@@ -1,0 +1,53 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Autoridade de Usuário
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Autoridade de usuário
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Ações
+                            th Autoridade
+                            th Descrição
+                            th Ativo
+                            th Criado em                             
+                            th Modificado em 
+                            th Modificado por
+                            
+                        tbody                                                  
+                             each authority in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/authorities/delete/#{authority.id}', method='post')                                      
+                                      a(href='/authorities/edit/#{authority.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{authority.userAuthority}
+                                td #{authority.AuthorityDescription} 
+                                td #{ativo = authority.active==true?'Sim':'Não' }                                
+                                td #{formatDate(authority.createdAt)}                                
+                                td #{formatDate(authority.updatedAt)}
+                                td #{(authority.modifiedBy)}                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/authorities/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

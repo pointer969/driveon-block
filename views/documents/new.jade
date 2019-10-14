@@ -1,0 +1,60 @@
+extends ../layout/default
+block head
+   link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+   link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css')
+block scritps
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item.active Compliance Files
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New File
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/documents/save', method='post', enctype="multipart/form-data") 
+                        .form-group
+                          label.form-control-label(for='document_title') Title
+                          .controls
+                            .input-group
+                              input#document_title.form-control(name='document_title',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='comments') Comments
+                          .controls
+                            .input-group
+                              input#comments.form-control(name='comments',size='100', type='text') 
+                        .form-group                                
+                          .card
+                            .card-header
+                              i.fa.fa-file-image-o
+                              |  Files
+                            .card-body  
+                              .row
+                                .col.s12 
+                                  .file-field.input-field
+                                    .btn.grey
+                                      span File
+                                      input(type='file', name='photo', accept='application/x-zip-compressed,image/*', required)
+                                    //- .file-path-wrapper
+                                    //-   input.file-path.validate(type='text', name='description' )    
+                        .form-group
+                          label.form-control-label(for='active') Active?
+                          .controls
+                            .input-group
+                              select#active.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/documents') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

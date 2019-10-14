@@ -1,0 +1,110 @@
+extends layout
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Meu veículo
+          li.breadcrumb-item Veiculo
+          li.breadcrumb-item.active Localizar
+        .container-fluid
+          .animated.fadeIn
+            .row      
+                      #mylocal         
+                      #myMap(style='top:0px;left:0px; width: 100vw; height: 100vh;')
+                        script(type='text/javascript').
+                          var map;
+                          var p = 0;                          
+                          var pushpin;
+                          var searchManager;
+                          function loadMapScenario() {                    
+                            watchPosition();                                                        
+                          };
+                          
+                          function executeQuery() {
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gps/33574e2d3136303130303534",
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {                                
+                                success(data);
+                              });
+                          };                          
+
+                          function error(err) {
+                            console.log(err.toString());
+                          }
+                          function watchPosition() {
+                            //map options
+                            var mapOptions = {
+                              credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                              mapTypeId: Microsoft.Maps.MapTypeId.road,
+                              enableSearchLogo: false,
+                              zoom: 14
+                            };
+                            //map initialization
+                            map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);                            
+                            executeQuery();                            
+                          }
+
+                          function success(position) {
+                            var geoloc =  position.message.gpsData.split(',');
+                            var lati = geoloc[0];
+                            var logi = geoloc[1];
+                          
+                            var pos = new Microsoft.Maps.Location(lati, logi);
+                            p++;                            
+                            if(pushpin){
+                              pushpin.setLocation(pos);
+                            }else{
+                              //infobox
+                              var offsetInfo = new Microsoft.Maps.Point(0, 30);
+                              var infoboxOptions  = { title: "Info.", description:   "Carro", offset: offsetInfo };
+                              var callout = new Microsoft.Maps.Infobox(pos, infoboxOptions);
+                              //pushpin
+                              var offsetPin = new Microsoft.Maps.Point(0, 5);
+                              var cardraw = '/img/driveonicocar.jpg'
+                              //var cardraw = '/img/doicon.png'                              
+                              var VIN = position.message.vinCode||'DPTC';
+                              var dongleCode = position.message.dongleCode.match(/.{1,2}/g).map(function(v){
+                                                  return String.fromCharCode(parseInt(v, 16));
+                                                }).join('');
+                              var pushpinOptions = {icon: cardraw, title: VIN, subTitle: dongleCode };
+                              pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+
+                              map.entities.push(pushpin);
+                              map.entities.push(callout);
+                            }
+                             map.setView({center:pos});
+                             reverseGeocode();
+                          };
+                          function reverseGeocode() {
+                            //If search manager is not defined, load the search module.
+                            if (!searchManager) {
+                                //Create an instance of the search manager and call the reverseGeocode function again.
+                                Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                                    searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                                    reverseGeocode();
+                                });
+                            } else {
+                                var searchRequest = {
+                                    location: map.getCenter(),
+                                    callback: function (r) {
+                                        //Tell the user the name of the result.
+                                        console.log(r);
+                                        
+                                        $('#mylocal').html(r.name);
+                                    },
+                                    errorCallback: function (e) {
+                                        //If there is an error, alert the user about it.
+                                        alert("Unable to reverse geocode location.");
+                                    }
+                                };
+
+                                //Make the reverse geocode request.
+                                searchManager.reverseGeocode(searchRequest);
+                            }                          
+                          };

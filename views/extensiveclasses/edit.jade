@@ -1,0 +1,58 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item Extensive Classes
+          li.breadcrumb-item.active Details
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Extensive Classes - Edit
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/extclasses/update/#{extclasses.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='class') Class
+                          .controls
+                            .input-group
+                              input#class.form-control(name='class',size='16', type='text', value='#{extclasses.class}')                       
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text', value='#{extclasses.description}') 
+                        .form-group
+                          label.form-control-label(for='rate') (%)
+                          .controls
+                            .input-group
+                              input#rate.form-control(name='rate',size='16', type='text', value='#{extclasses.rate}')                                               
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=extclasses.active == true) Yes
+                                option(value='false', selected=extclasses.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{extclasses.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Update   
+                          span     
+                          a(href='/extclasses/show/#{extclasses.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancel                               

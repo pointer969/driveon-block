@@ -1,0 +1,633 @@
+extends layout/default
+
+block header
+  script(src='/bower_components/jquery/dist/jquery.min.js').
+  script(src='/bower_components/chart.js/dist/Chart.min.js').
+
+block content
+  - var ucustomer = user.customer;  
+  -function prettyDate(dateString){
+    //if it's already a date object and not a string you don't need this line:
+    -var date = new Date(dateString);
+    -var d = date.getDate();
+    -var monthNames = [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ];
+    -var m = monthNames[date.getMonth()];
+    -var y = date.getFullYear();
+    -var h = date.getHours();
+    -var mi = date.getMinutes();
+    -var s = date.getSeconds();
+    -return d+'/'+m+'/'+y+' '+h+':'+mi+':'+s;
+    -}
+  main.main         
+        ol.breadcrumb
+          li.breadcrumb-item Home
+          li.breadcrumb-item
+            a(href='#') Admin
+          li.breadcrumb-item.active Un1ty                    
+        .container-fluid
+          .animated.fadeIn
+            input(type='hidden', id='customer', value=ucustomer)
+            .row               
+              //- .col-sm-6.col-lg-3
+              //-   .card.text-white.bg-primary
+              //-     .card-body.pb-0                  
+              //-       h4.mb-0 
+              //-         #SumCurMileage                             
+              //-       p Distância Percorrida
+              //-     .chart-wrapper.px-3(style='height:70px;')
+              //-       canvas#card-chart1.chart(height='70')                                      
+              //-     script(type='text/javascript'). 
+              //-       $(document).ready(function(){ 
+              //-          var ucust = $('#customer').val();
+              //-          $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntTripByDay/"+ ucust,
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-               retrnCnt = data.sumcurrentTripMileage + ' Km';
+              //-               $('#SumCurMileage').html(retrnCnt);    
+              //-             });
+
+              //-          $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/chartMileageMonth",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {            
+              //-                 var lbl = []      
+              //-                 var dts = []
+              //-                 $.each(data.message, function(index, value) {      //Cards with Charts
+              //-                     var rawDrecv = value.dreceived
+              //-                     var cumTot   = value.TotDeslocamento
+                                
+              //-                     lbl.push(rawDrecv);
+              //-                     dts.push(cumTot);
+              //-                 });
+                                                             
+              //-                 var data = {
+              //-                   labels: lbl,
+              //-                   datasets: [
+              //-                     {
+              //-                       label: 'Distância Percorrida',
+              //-                       backgroundColor: $.brandPrimary,
+              //-                       borderColor: 'rgba(255,255,255,.55)',
+              //-                       data: dts
+              //-                     },
+              //-                    ]
+              //-                  };
+              //-                 var options = {
+              //-                     maintainAspectRatio: false,
+              //-                     legend: {
+              //-                       display: false
+              //-                     },
+              //-                     scales: {
+              //-                       xAxes: [{
+              //-                         gridLines: {
+              //-                           color: 'transparent',
+              //-                           zeroLineColor: 'transparent'
+              //-                         },
+              //-                         ticks: {
+              //-                           fontSize: 2,
+              //-                           fontColor: 'transparent',
+              //-                         }
+              //-                       }],
+              //-                       yAxes: [{
+              //-                         display: false,
+              //-                         ticks: {
+              //-                           display: false,
+              //-                           min: Math.min.apply(Math, data.datasets[0].data) - 5,
+              //-                           max: Math.max.apply(Math, data.datasets[0].data) + 5,
+              //-                         }
+              //-                       }],
+              //-                     },
+              //-                     elements: {
+              //-                       line: {
+              //-                         borderWidth: 1
+              //-                       },
+              //-                       point: {
+              //-                         radius: 4,
+              //-                         hitRadius: 10,
+              //-                         hoverRadius: 4,
+              //-                       },
+              //-                     }
+              //-                   };
+              //-                   //- var ctx = $('#card-chart1');
+              //-                   var ctx = document.getElementById('card-chart1');                                     
+              //-                   var cardChart1 = new Chart(ctx, {
+              //-                     type: 'line',
+              //-                     data: data,
+              //-                     options: options
+              //-                   });  
+              //-             });  
+
+
+              //-             //- Motor Ocioso
+              //-             $.ajax
+              //-               ({
+              //-                 type: "post",
+              //-                 url: "/cntIdleTime",
+              //-                 dataType: "json",
+              //-                 crossDomain: "false",
+              //-                 contentType: "application/json; charset=UTF-8"                                                             
+              //-               }).done(function ( data ) {                               
+              //-                 if ( data ) {
+              //-                       retrnCnt = data.sumIdleTime + ' Minutos';
+              //-                 } else {
+              //-                       retrnCnt ='0 Minutos'; 
+              //-                 }  
+              //-                 $('#SumIdleEngine').html(retrnCnt);    
+              //-               });
+              //-                $.ajax
+              //-                   ({
+              //-                     type: "post",
+              //-                     url: "/chartIdleTime",
+              //-                     dataType: "json",
+              //-                     crossDomain: "false",
+              //-                     contentType: "application/json; charset=UTF-8"                                                             
+              //-                   }).done(function ( data ) {       
+              //-                     var lbl = []      
+              //-                     var dts = []
+                                 
+              //-                     $.each(data.sumIdleTime, function(index, value) {      //Cards with Charts
+              //-                       var rawDrecv = value.dreceived
+              //-                       var cumTot   = value.Min
+              //-                       lbl.push(rawDrecv);
+              //-                       dts.push(cumTot);                                  
+              //-                     });
+
+              //-                     var data = {
+              //-                       labels: lbl,
+              //-                       datasets: [
+              //-                         {
+              //-                           label: 'Motor Ocioso',
+              //-                           backgroundColor: $.brandInfo,
+              //-                           borderColor: 'rgba(255,255,255,.55)',
+              //-                           data: dts
+              //-                         },
+              //-                       ]
+              //-                     };
+              //-                     var options = {
+              //-                       maintainAspectRatio: false,
+              //-                       legend: {
+              //-                         display: false
+              //-                       },
+              //-                       scales: {
+              //-                         xAxes: [{
+              //-                           gridLines: {
+              //-                             color: 'transparent',
+              //-                             zeroLineColor: 'transparent'
+              //-                           },
+              //-                           ticks: {
+              //-                             fontSize: 2,
+              //-                             fontColor: 'transparent',
+              //-                           }
+
+              //-                         }],
+              //-                         yAxes: [{
+              //-                           display: false,
+              //-                           ticks: {
+              //-                             display: false,
+              //-                             min: Math.min.apply(Math, data.datasets[0].data) - 5,
+              //-                             max: Math.max.apply(Math, data.datasets[0].data) + 5,
+              //-                           }
+              //-                         }],
+              //-                       },
+              //-                       elements: {
+              //-                         line: {
+              //-                           tension: 0.00001,
+              //-                           borderWidth: 1
+              //-                         },
+              //-                         point: {
+              //-                           radius: 4,
+              //-                           hitRadius: 10,
+              //-                           hoverRadius: 4,
+              //-                         },
+              //-                       }
+              //-                     };
+              //-                     var ctx = $('#card-chart2');
+              //-                     var cardChart2 = new Chart(ctx, {
+              //-                       type: 'line',
+              //-                       data: data,
+              //-                       options: options
+              //-                     });
+              //-                   });  
+
+
+
+              //-               //- Altas Acelerações
+              //-             $.ajax
+              //-               ({
+              //-                   type: "post",
+              //-                   url: "/cntHACCOccur",
+              //-                   dataType: "json",
+              //-                   crossDomain: "false",
+              //-                   contentType: "application/json; charset=UTF-8"                                                            
+              //-               }).done(function ( data ) {                               
+              //-                 if ( data ) {                                   
+              //-                       retrnCnt = data.sumHardacceleration + ' Ocorrências';
+              //-                 } else {
+              //-                       retrnCnt ='0 Ocorrências'; 
+              //-                 }  
+              //-                 $('#SumHACCOccur').html(retrnCnt);     
+              //-               });
+
+              //-             $.ajax
+              //-              ({
+              //-                   type: "post",
+              //-                   url: "/chartHACCOccur",
+              //-                   dataType: "json",
+              //-                   crossDomain: "false",
+              //-                   contentType: "application/json; charset=UTF-8"                                                             
+              //-              }).done(function ( data ) {  
+
+              //-                 var lbl = []      
+              //-                 var dts = []
+              //-                 $.each(data.sumIdleTime, function(index, value) {      //Cards with Charts
+              //-                   var rawDrecv = value.dreceived
+              //-                   var cumTot   = value.Min
+
+              //-                   lbl.push(rawDrecv);
+              //-                   dts.push(cumTot);  
+              //-                 });
+
+              //-                 var options = {
+              //-                   maintainAspectRatio: false,
+              //-                   legend: {
+              //-                     display: false
+              //-                   },
+              //-                   scales: {
+              //-                     xAxes: [{
+              //-                       display: false
+              //-                     }],
+              //-                     yAxes: [{
+              //-                       display: false
+              //-                     }],
+              //-                   },
+              //-                   elements: {
+              //-                     line: {
+              //-                       borderWidth: 2
+              //-                     },
+              //-                     point: {
+              //-                       radius: 0,
+              //-                       hitRadius: 10,
+              //-                       hoverRadius: 4,
+              //-                     },
+              //-                   }
+              //-                 };
+              //-                 var data = {
+              //-                   labels: lbl,
+              //-                   datasets: [
+              //-                     {
+              //-                       label: 'Altas Acelerações',
+              //-                       backgroundColor: 'rgba(255,255,255,.2)',
+              //-                       borderColor: 'rgba(255,255,255,.55)',
+              //-                       data: dts
+              //-                     },
+              //-                   ]
+              //-                 };
+              //-                 var ctx = $('#card-chart3');
+              //-                 var cardChart3 = new Chart(ctx, {
+              //-                   type: 'line',
+              //-                   data: data,
+              //-                   options: options
+              //-                 });
+              //-               });  
+
+
+              //-             //- Break hash
+              //-             $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntHBRAKEOccur",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-               if ( data ) {                                   
+              //-                       retrnCnt = data.cntHBRAKEOccur + ' Ocorrências';
+              //-                 } else {
+              //-                       retrnCnt ='0 Ocorrências'; 
+              //-                 }  
+              //-               $('#SumHBRAKEOccur').html(retrnCnt);    
+              //-             }); 
+              //-              $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/chartHBRAKEOccur",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {          
+              //-                var lbl = []      
+              //-                 var dts = []
+              //-                 $.each(data.cntHBRAKEOccur, function(index, value) {      
+              //-                   var rawDrecv = value.Data
+              //-                   var cumTot   = value.Min
+                                
+              //-                   lbl.push(rawDrecv);
+              //-                   dts.push(cumTot);  
+              //-                 });
+
+              //-                 var options = {
+              //-                     maintainAspectRatio: false,
+              //-                     legend: {
+              //-                       display: false
+              //-                     },
+              //-                     scales: {
+              //-                       xAxes: [{
+              //-                         display: false,
+              //-                         barPercentage: 0.6,
+              //-                       }],
+              //-                       yAxes: [{
+              //-                         display: false,
+              //-                       }]
+              //-                     },
+
+              //-                   };
+              //-                   var data = {
+              //-                     labels: lbl,
+              //-                     datasets: [
+              //-                       {
+              //-                         backgroundColor: 'rgba(255,255,255,.3)',
+              //-                         borderColor: 'transparent',
+              //-                         data: dts
+              //-                       },
+              //-                     ]
+              //-                   };
+              //-                   var ctx = $('#card-chart4');
+              //-                   var cardChart4 = new Chart(ctx, {
+              //-                     type: 'bar',
+              //-                     data: data,
+              //-                     options: options
+              //-                   });   
+              //-             });  
+
+                        
+              //-             $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntDevConnected/"+ ucust,
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-               if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 } 
+              //-               $('#VehicleON').html(retrnCnt);    
+              //-             });
+
+              //-             $.ajax
+              //-             ({
+              //-                 type: "post",
+              //-                 url: "/cntDevDisconnected/"+ ucust,
+              //-                 dataType: "json",
+              //-                 crossDomain: "false",
+              //-                 contentType: "application/json; charset=UTF-8"                                                             
+              //-               }).done(function ( data ) { 
+                               
+              //-                 if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 } 
+              //-                 $('#VehicleOFF').html(retrnCnt);    
+              //-               });
+              //-             $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntSOS",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-               if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 }  
+              //-               $('#SOScnt').html(retrnCnt);    
+              //-             });
+
+              //-             $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntReb",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-                if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 }  
+              //-               $('#Rebcnt').html(retrnCnt);    
+              //-             });
+
+
+              //-             $.ajax
+              //-             ({
+              //-               type: "post",
+              //-               url: "/cntMIL",
+              //-               dataType: "json",
+              //-               crossDomain: "false",
+              //-               contentType: "application/json; charset=UTF-8"                                                             
+              //-             }).done(function ( data ) {  
+              //-               if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 } 
+              //-               $('#MILcnt').html(retrnCnt);    
+              //-             });
+
+              //-             $.ajax
+              //-               ({
+              //-                 type: "post",
+              //-                 url: "/sumGAS",
+              //-                 dataType: "json",
+              //-                 crossDomain: "false",
+              //-                 contentType: "application/json; charset=UTF-8"                                                             
+              //-               }).done(function ( data ) {  
+              //-                if ( data.total ) {                                   
+              //-                       retrnCnt = data.total
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 } 
+              //-                 retrnCnt = Math.round(parseInt(data.total) * 0.1,2);
+                             
+              //-                 $('#SumFuel').html(retrnCnt);    
+              //-               });
+
+              //-             $.ajax
+              //-               ({
+              //-                 type: "post",
+              //-                 url: "/getDuration",
+              //-                 dataType: "json",
+              //-                 crossDomain: "false",
+              //-                 contentType: "application/json; charset=UTF-8"                                                             
+              //-               }).done(function ( data ) {  
+              //-                if ( data.total ) {                                   
+              //-                       retrnCnt = data.total;
+              //-                 } else {
+              //-                       retrnCnt ='0'; 
+              //-                 } 
+              //-                 retrnCnt = Math.round(parseInt(data.total) * 0.1,2);
+                             
+              //-                 $('#SumFuel').html(retrnCnt);    
+              //-               });
+
+              //-         })              
+              //- .col-sm-6.col-lg-3
+              //-   .card.text-white.bg-info
+              //-     .card-body.pb-0                   
+              //-       h4.mb-0
+              //-         #SumIdleEngine 
+              //-       p Motor Ocioso
+              //-     .chart-wrapper.px-3(style='height:70px;')
+              //-       canvas#card-chart2.chart(height='70')                                  
+              //- .col-sm-6.col-lg-3
+              //-   .card.text-white.bg-warning
+              //-     .card-body.pb-0                  
+              //-       h4.mb-0 
+              //-         #SumHACCOccur
+              //-       p Altas Acelerações
+              //-     .chart-wrapper(style='height:70px;')
+              //-       canvas#card-chart3.chart(height='70')               
+              //- .col-sm-6.col-lg-3
+              //-   .card.text-white.bg-danger
+              //-     .card-body.pb-0                  
+              //-       h4.mb-0
+              //-         #SumHBRAKEOccur
+              //-       p Freadas bruscas
+              //-     .chart-wrapper.px-3(style='height:70px;')
+              //-       canvas#card-chart4.chart(height='70')
+            //- .row
+              .col-md-12
+                .card
+                  .card-header
+                    | Serviços
+                  .card-body
+                    .row
+                      .col-sm-12.col-lg-4
+                        .row
+                          .col-sm-6
+                            .callout.callout-info
+                              small.text-muted Veiculos
+                              br                              
+                              //- EndPoint - Provide Total Connected (login recente or alarm conected)
+                              strong.h4 
+                               #Vechcles 1
+                              .chart-wrapper
+                                canvas#sparkline-chart-1(width='100', height='30')
+                          // /.col
+                          .col-sm-6
+                            .callout.callout-danger
+                              small.text-muted Motoristas
+                              br
+                              //- EndPoint - Provide Total Disconnected (login recente or alarm disconected)
+                              strong.h4 
+                               #VehicleOFF 91
+                              .chart-wrapper
+                                canvas#sparkline-chart-2(width='100', height='30')
+                      //- .col-sm-6.col-lg-4
+                      //-   .row
+                      //-     .col-sm-6
+                      //-       .callout.callout-warning
+                      //-         small.text-muted Drivers
+                      //-         br
+                      //-         //- EndPoint - Provide Total SOS Alarms
+                      //-         strong.h4 
+                      //-          #SOScnt
+                      //-         .chart-wrapper
+                      //-           canvas#sparkline-chart-3(width='100', height='30')
+                      //-     // /.col
+                      //-     .col-sm-6
+                      //-       .callout.callout-success
+                      //-         small.text-muted Rebocados
+                      //-         br
+                      //-         //- EndPoint - Provide Total Towing alarms
+                      //-         strong.h4 
+                      //-          #Rebcnt
+                      //-         .chart-wrapper
+                      //-           canvas#sparkline-chart-4(width='100', height='30')
+                      //-     // /.col                        
+                      //- .col-sm-6.col-lg-4
+                      //-   .row
+                      //-     .col-sm-6
+                      //-       .callout
+                      //-         small.text-muted Combustível
+                      //-         br
+                      //-         //- EndPoint - Provide Total Speeding alarms
+                      //-         strong.h4 
+                      //-           #SumFuel
+                      //-         .chart-wrapper
+                      //-           canvas#sparkline-chart-5(width='100', height='30')
+                      //-     // /.col
+                      //-     .col-sm-6
+                      //-       .callout.callout-primary
+                      //-         small.text-muted MIL*
+                      //-         br
+                      //-         //- EndPoint - Provide Total MIL alarms
+                      //-         strong.h4 
+                      //-           #MILcnt
+                      //-         .chart-wrapper
+                      //-           canvas#sparkline-chart-6(width='100', height='30')
+                      //-     // /.col                        
+                    br
+                  if (services) 
+                    table.table.table-responsive.table-hover.table-outline.mb-0
+                      thead.thead-default
+                        tr
+                          //- th.text-center
+                          //-   i.icon-th-large
+                          //- th Area
+                          th.text-center Serviço
+                          th.text-center Descrição
+                          th.text-center Status
+                          th.text-center Registros
+                          th.text-center Ultima Execução
+                      tbody                      
+                        each srvc in services
+                          - var cln = 0
+                          - var narea = srvc.Area
+                          - var nservice = srvc.services
+                          - var ndesc = srvc.description
+                          - var nstatus = srvc.status
+                          - var crecords = srvc.records
+                          - var nlexecution = srvc.last_run
+                          tr
+                            
+                            //- td
+                              div 
+                                a(href='/analytics') #{cln++}
+                              //- .small.text-muted
+                                span Registrado: #{prettyDate(carro.createdAt)}
+                            //- td.text-center                              
+                              span #{narea}
+                            td.text-left                              
+                              span #{nservice}      
+                            td.text-left                              
+                              span #{ndesc}   
+                            td.text-center
+                              .avatar                                
+                                //- img.img-avatar(src='img/avatars/4.jpg', alt=uemail)
+                                if (nstatus =='on')
+                                    span.avatar-status.badge-success  
+                                else
+                                    span.avatar-status.badge-error  
+                            td.text-center                              
+                              span #{crecords}    
+                            td.text-center                              
+                              span #{nlexecution}                          
+                    if (pages > 1)
+                      ul.pagination
+                        != createPagination(pages, page)

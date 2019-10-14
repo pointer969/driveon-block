@@ -1,0 +1,55 @@
+extends layout
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Acesso
+          li.breadcrumb-item.active Login
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Usuários
+                    .card-body                    
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Nome
+                            th Email
+                            th Administrador
+                            th Criado em
+                            th Ações
+                        tbody                                                  
+                            - each usuario in usuarios
+                              tr
+                                td #{usuario.fullname}
+                                td #{usuario.email} 
+                                td - var adm = usuario.admin =="Yes"?"Sim":"Não" 
+                                td #{formatDate(usuario.createdAt)}
+                                td 
+                                  a(href='/user/edit/#{usuario.id}') Editar 
+                                  span
+                                  a(href='/user/delete/#{usuario.id}') Deletar
+                            div
+                                  p
+                                    a(href='user/create') Novo
+                      //- - if (pages > 1)
+                      //-   ul.pagination
+                      //-     != createPagination(pages, page)                                    
+                      ul.pagination
+                        li.page-item
+                          a.page-link(href='#') Prev
+                        li.page-item.active
+                          a.page-link(href='#') 1
+                        li.page-item
+                          a.page-link(href='#') 2
+                        li.page-item
+                          a.page-link(href='#') 3
+                        li.page-item
+                          a.page-link(href='#') 4
+                        li.page-item
+                          a.page-link(href='#') Next                

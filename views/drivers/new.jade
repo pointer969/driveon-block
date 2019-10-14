@@ -1,0 +1,43 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Drivers
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New Driver
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/drivers/save', method='post')
+                        .form-group
+                          label.form-control-label(for='driverlicense') Driver License
+                          .controls
+                            .input-group
+                              input#driverlicense.form-control(name='driverlicense',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='name') Driver Name
+                          .controls
+                            .input-group
+                              input#name.form-control(name='name',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='active') Active?
+                          .controls
+                            .input-group
+                              select#active.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/drivers') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

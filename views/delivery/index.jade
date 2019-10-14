@@ -1,0 +1,50 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Batch
+          li.breadcrumb-item.active Shipping (Lakes)  - Compliance Hint (Sheet 31 - Form E.1 20)
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Shipping
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Sales Order 
+                            th Date
+                            th Customer
+                            th Vehicle                         
+                            th Active                            
+                        tbody                                                  
+                             each so in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/suppliers/delete/#{so.id}', method='post')                                      
+                                      a(href='/suppliers/edit/#{so.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{so.so}
+                                td #{so.d_sales} 
+                                td #{so.customer.fullname}                              
+                                td #{so.vehicle.vehicle.plate}
+                                td #{ativo = so.active==true?'Yes':'No' }                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/suppliers/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

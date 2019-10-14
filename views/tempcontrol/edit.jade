@@ -1,0 +1,69 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item Temperature Quality Control
+          li.breadcrumb-item.active Detail
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      | Temperature Quality Control - Detail
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/processing/tempcontrol/update/#{tqclist.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              input#date.form-control(name='date',size='10', type='text', value='#{tqclist.date}', readonly=false )
+                        .form-group
+                          label.form-control-label(for='time') Time
+                          .controls
+                            .input-group
+                              input#time.form-control(name='time',size='100', type='text', value='#{tqclist.time}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='placeid') Place
+                          .controls
+                            .input-group
+                              input#placeid.form-control(name='placeid',size='100', type='text', value='#{tqclist.placeid}', readonly=false ) 
+                        .form-group
+                          label.form-control-label(for='temp') Temperature
+                          .controls
+                            .input-group
+                              input#temperature.form-control(name='temperature',size='100', type='text', value='#{tqclist.ph}', readonly=false )     
+                        .form-group
+                          label.form-control-label(for='unit') Unit
+                          .controls
+                            .input-group
+                              select#unit.form-control-sm(name='unit', disabled=false)
+                                option(value='C',selected=tqclist.unit == 'C') °C Celsius
+                                option(value='F',selected=tqclist.unit == 'F') °F Fahrenheit                       
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Actvive?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=tqclist.active == true) Yes
+                                option(value='false', selected=tqclist.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{tqclist.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Update   
+                          span     
+                          a(href='/processing/tempcontrol/show/#{tqclist.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancel                               

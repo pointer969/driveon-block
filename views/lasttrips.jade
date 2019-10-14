@@ -1,0 +1,173 @@
+extends layout
+
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Drivers
+          li.breadcrumb-item Veículos
+          li.breadcrumb-item.active Último trajeto
+        .container-fluid(style='padding-left: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;')  
+          #container(style='position: relative;top: 0; padding-bottom: 56.25%; padding-top: 0; height: 0;  overflow: hidden;') 
+            #myMap(style='position: absolute; top: 0px; left: 0px; width: 100%;  height: 100%; z-index:100')
+                  script(type='text/javascript').
+                    var map = null;    
+                    var p = 0;                          
+                    var pushpin;                    
+                    function loadMapScenario() {                    
+                        //map options
+                        var mapOptions = {
+                          credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                          mapTypeId: Microsoft.Maps.MapTypeId.road,
+                          //- enableSearchLogo: false,
+                          disableZooming: true,
+                          zoom: 14
+                        };
+                        //map initialization
+                        map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);    
+                        
+                        //Use a trottled event to reduce the number of unwanted events being fired.
+                        //- Microsoft.Maps.Events.addThrottledHandler(map, 'viewchangeend', UpdatePOIData, 250);                                                    
+                      };
+                    //- function UpdatePOIData(credentials){
+                    //-       map.getCredentials(MakePOIRequest);
+                    //-   };
+
+                    //- function MakePOIRequest(credentials) {
+                    //-       var bbox = map.getBounds();
+
+                    //-       var poiRequest = "http://spatial.virtualearth.net/REST/v1/data/c2ae584bbccc4916a0acf75d1e6947b4/NavteqEU/NavteqPOIs?"
+                    //-           + "spatialFilter=bbox(" + bbox.getSouth() + "," + bbox.getWest() + "," + bbox.getNorth() + "," + bbox.getEast() + ")"
+                    //-           + "&$format=json&jsonp=POICallback&key=" + credentials
+                    //-           + "&$filter=EntityTypeID Eq '6000'";
+
+                    //-       //EntityType 3578 = ATM
+                    //-       //List of Entity types: http://msdn.microsoft.com/en-us/library/hh478191.aspx
+
+                    //-       CallRestService(poiRequest);
+                    //-   }; 
+                    //- function POICallback(response) {
+                    //-       map.entities.clear();
+
+                    //-       if (response != null &&
+                    //-         response.d != null &&
+                    //-         response.d.results != null &&
+                    //-         response.d.results.length > 0)
+                    //-       {
+                    //-           //add the POI data to the map
+                    //-         for(var i = 0; i < response.d.results.length; i++){
+                    //-               var location = new Microsoft.Maps.Location(response.d.results[i].Latitude, response.d.results[i].Longitude);
+                    //-               var pushpin = new Microsoft.Maps.Pushpin(location);
+                    //-               map.entities.push(pushpin);
+                    //-         }
+                    //-       }
+                    //-   };
+                    //- function CallRestService(request){
+                    //-       var script = document.createElement("script");
+                    //-       script.setAttribute("type", "text/javascript");
+                    //-       script.setAttribute("src", request);
+                    //-       document.body.appendChild(script);
+                    //-   };
+
+                    function executeQuery(dongle, plate) {
+
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gps/" + dongle,
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {    
+                                //- console.log('Data=>'+ data);                            
+                                success(data,plate);
+                                //- getPolyline(dongle);
+                              });
+                          };
+                    function getPolyline(dongle) {
+                              console.log('Entrou getPolyline!')
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gpslist/" + dongle,
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {    
+                                console.log('Data=>'+ data);                            
+                                setPolyline(data);
+                              });
+                          };
+                    function setPolyline(positions){
+                        var points = []
+                        console.log('Iniciou')
+                        console.log('positions:'+positions)
+                        for(var pos in positions){
+                            var geoloc =  positions[pos].message.gpsData.split(',');
+                            console.log('geoloc:'+geoloc)
+                            var lati = geoloc[0];
+                            var logi = geoloc[1];
+
+                            var Vlatlog = new VELatLong(lati,logi);
+                            points.push(Vlatlog);
+                        }
+
+                        var color = new VEColor(255,0,0,1);
+                        var width = 5;
+                        var id = 'I70';
+
+                        var poly = new VEPolyline(id, points, color, width);
+                        map.AddPolyline(poly);
+                        map.SetMapView(points);
+                     };
+
+
+                    function success(position, pl) {
+                            var geoloc =  position.message.gpsData.split(',');
+                            var lati = geoloc[0];
+                            var logi = geoloc[1];
+                            
+                            var pos = new Microsoft.Maps.Location(lati, logi);
+                            //- p++;                            
+                            if(pushpin){
+                              pushpin.setLocation(pos);                              
+                            }else{
+                              //infobox
+                              //- var offsetInfo = new Microsoft.Maps.Point(0, 30);
+                              //- var infoboxOptions  = { title: "Info.", description:   "Carro", offset: offsetInfo };
+                              //- var callout = new Microsoft.Maps.Infobox(pos, infoboxOptions);
+                              //- //pushpin
+                              //- var offsetPin = new Microsoft.Maps.Point(0, 5);
+                              //- var cardraw = '/img/driveonicocar.jpg'
+                              //- //var cardraw = '/img/doicon.png'                              
+                              //- var VIN = position.message.vinCode||'JXA-0944';
+                              //- var dongleCode = position.message.dongleCode.match(/.{1,2}/g).map(function(v){
+                              //-                     return String.fromCharCode(parseInt(v, 16));
+                              //-                   }).join('');
+                              var pushpinOptions = {title: pl};
+                              pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+
+                              map.entities.push(pushpin);
+                              //- map.entities.push(callout);
+                            }
+
+                             map.setView({center:pos});
+                            //-  reverseGeocode();
+                      };        
+              #cnttable(style='position: absolute; top:6px; left: 35px;  width:180px;  height:30px;   z-index: 2000;')
+                table.table.table-responsive.table-hover.table-outline.mb-0
+                  thead.thead-default
+                    tr                           
+                      th Veículos                            
+                  tbody
+                    each carro in carros
+                      tr                           
+                        td
+                          div                             
+                            //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
+                            button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
+                if (pages > 1)
+                  ul.pagination
+                    != createPagination(pages, page) 

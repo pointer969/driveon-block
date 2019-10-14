@@ -1,0 +1,54 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item.active Suppliers
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Suppliers
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Business Name  
+                            th Type
+                            th CPF / CNPJ
+                            th District
+                            th City
+                            th State/Province
+                            th Active                            
+                        tbody                                                  
+                             each supplier in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/suppliers/delete/#{supplier.id}', method='post')                                      
+                                      a(href='/suppliers/edit/#{supplier.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{supplier.commercialName}
+                                td #{supplier.business_segment} 
+                                td #{supplier.supplier}                              
+                                td #{supplier.district}
+                                td #{supplier.city}
+                                td #{supplier.province}  
+                                td #{ativo = supplier.activeStatus==true?'Yes':'No' }                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/suppliers/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

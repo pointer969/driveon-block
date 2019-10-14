@@ -1,0 +1,79 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item Water Quality Control
+          li.breadcrumb-item.active Detail
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Water Quality Control - Detail
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/processing/watercontrol/delete/#{wqclist.id}', method='post') 
+                         .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              input#date.form-control(name='date',size='10', type='text', value='#{wqclist.date}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='time') Time
+                          .controls
+                            .input-group
+                              input#time.form-control(name='time',size='100', type='text', value='#{wqclist.time}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='state') Place
+                          .controls
+                            .input-group
+                              input#placeid.form-control(name='placeid',size='100', type='text', value='#{wqclist.placeid}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='ph') ph
+                          .controls
+                            .input-group
+                              input#ph.form-control(name='ph',size='100', type='text', value='#{wqclist.ph}', readonly=true)     
+                        .form-group
+                          label.form-control-label(for='cloroppm') Cloro (PPM) 
+                          .controls
+                            .input-group
+                              input#cloroppm.form-control(name='cloroppm',size='100', type='text', value='#{wqclist.cloroppm}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='status') Status (C / NC)
+                          .controls
+                            .input-group
+                               select#status.form-control-sm(name='status', disabled=true)
+                                option(value='C',selected=wqclist.status == 'C') Conforming
+                                option(value='NC',selected=wqclist.status == 'NC') Non-Conforming
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Active?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=wqclist.active == true) Yes
+                                option(value='false', selected=wqclist.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{wqclist.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/processing/watercontrol/edit/#{wqclist.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/processing/watercontrol')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to List                               

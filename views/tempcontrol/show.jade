@@ -1,0 +1,74 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item Temperature Quality Control
+          li.breadcrumb-item.active Detail
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      | Temperature Quality Control - Detail
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/processing/tempcontrol/delete/#{tqclist.id}', method='post') 
+                         .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              input#date.form-control(name='date',size='10', type='text', value='#{tqclist.date}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='time') Time
+                          .controls
+                            .input-group
+                              input#time.form-control(name='time',size='100', type='text', value='#{tqclist.time}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='state') Place
+                          .controls
+                            .input-group
+                              input#placeid.form-control(name='placeid',size='100', type='text', value='#{tqclist.placeid}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='temperature') Temperature
+                          .controls
+                            .input-group
+                              input#temperature.form-control(name='temperature',size='100', type='text', value='#{tqclist.temperature}', readonly=true)     
+                        .form-group
+                          label.form-control-label(for='uunit') Unit
+                          .controls
+                            .input-group
+                               select#unit.form-control-sm(name='unit', disabled=true)
+                                option(value='C',selected=tqclist.unit == 'C') °C Celsius
+                                option(value='F',selected=tqclist.unit == 'F') °F Fahrenheit   
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Active?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=tqclist.active == true) Yes
+                                option(value='false', selected=tqclist.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{tqclist.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/processing/tempcontrol/edit/#{tqclist.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/processing/tempcontrol')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to List                               

@@ -1,0 +1,58 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb          
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item Drivers
+          li.breadcrumb-item.active Details
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Driver - Details
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/drivers/delete/#{drivers.id}', method='post') 
+                        .form-group
+                          label.form-control-label(for='driverlicense') Driver License
+                          .controls
+                            .input-group
+                              input#driverlicense.form-control(name='driverlicense',size='100', type='text', value='#{drivers.driverlicense}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='name') Driver Name
+                          .controls
+                            .input-group
+                              input#name.form-control(name='name',size='100', type='text', value='#{drivers.name}', readonly=true)                            
+                        .form-group
+                          label.col-md-3.form-control-label(for='active') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=drivers.active == true) Yes
+                                option(value='false', selected=drivers.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{drivers.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/drivers/edit/#{drivers.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/drivers')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to List                               

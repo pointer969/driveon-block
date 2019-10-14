@@ -1,0 +1,90 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item COnfiguration
+          li.breadcrumb-item TAG
+          li.breadcrumb-item.active Setup
+        script(src='#{baseuri}bower_components/jquery/dist/jquery.min.js').  
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  TAG Setup 
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th TAG
+                            th Description
+                            th Created At 
+                            th Created By
+                            th Actions
+                        tbody                                                  
+                             each device in list
+                              tr
+                                td #{device.device}
+                                td #{device.description}                               
+                                td #{formatDate(device.createdAt)} 
+                                td #{(device.modifiedBy)}
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/devices/reset/#{device.id}', method='post')   
+                                      //- a(href='/devices/sendcmd/#{device.id}')
+                                      //-   button(type='button',  style='background-color:transparent; border-color:transparent;')
+                                      //-     i.fa.fa-server                                                                                                             
+                                      //- span                                      
+                                      //- button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                      //-   i.fa.fa-repeat 
+                                      button.btn.btn-info(type='button', data-toggle='modal', data-target='#infoModal')
+                                        | Setup                                         
+                                        script(type='text/javascript'). 
+                                          $(document).ready(function(){ 
+                                            $('#sendcmd').click(function(){ 
+                                              var retrnCnt = "<p>Sending sms...</p>" 
+                                              $('#JQRYLOG').html(retrnCnt); 
+                                              $.ajax
+                                                ({
+                                                  type: "get",
+                                                  url: "/devices/sendcmd/#{device.id}",
+                                                  dataType: "json",
+                                                  crossDomain: "false",
+                                                  contentType: "application/json; charset=UTF-8"                                                             
+                                                }).done(function ( data ) {
+                                                  retrnCnt = retrnCnt + "<p>Status:" + data.status +"</p>";  
+                                                  $('#JQRYLOG').append(retrnCnt);                                                     
+                                                  retrnCnt = retrnCnt + "<p>Sucesso:" + data.sucesso +"</p>"; 
+                                                  $('#JQRYLOG').append(retrnCnt);  
+                                                  retrnCnt = retrnCnt + "<p>Mensagem:" + data.mensagem +"</p>"; 
+                                                  $('#JQRYLOG').append(retrnCnt);  
+                                                  retrnCnt = retrnCnt + "<p>Id:" + data.dados.id +"</p>";
+                                                  $('#JQRYLOG').append(retrnCnt);                                                
+                                                }).fail(function( err ) {
+                                                  retrnCnt = retrnCnt + "<p>ERRO=>"+err+"</p>";                                                   
+                                                }); 
+                                                retrnCnt = retrnCnt + "<p>Configuração finalizada!</p>";
+                                                $('#JQRYLOG').append(retrnCnt);           
+                                               });  
+                                              });  
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page) 
+          #infoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            .modal-dialog.modal-info(role='document')
+              .modal-content
+                .modal-header
+                  h4.modal-title Setup Log
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                  #JQRYLOG
+                .modal-footer
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                  button#sendcmd.btn.btn-info(type='button') Sending Config. to TAG                  

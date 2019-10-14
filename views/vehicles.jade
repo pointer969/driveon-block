@@ -1,0 +1,39 @@
+extends layout
+
+block content
+                    table.table.table-responsive.table-hover.table-outline.mb-0
+                      thead.thead-default
+                        tr
+                          th.text-center
+                            i.icon-notebook
+                          th Vehicle
+                          th.text-center VIN
+                          th Uso
+                          th.text-center Estado
+                          th Atividade                      
+                      tbody
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/3.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-success
+                          td
+                            div Yiorgos Avraamu
+                            .small.text-muted
+                              span New
+                              | | Registered: Jan 1, 2015
+                          td.text-center
+                            img(src='img/flags/USA.png', alt='USA', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 50%
+                              .float-right
+                                small.text-muted Jun 11, 2015 - Jul 10, 2015
+                            .progress.progress-xs
+                              .progress-bar.bg-success(role='progressbar', style='width: 50%', aria-valuenow='50', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-mastercard(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 10 sec ago

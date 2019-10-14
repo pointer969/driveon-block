@@ -1,0 +1,89 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item Variáveis para cálculo
+          li.breadcrumb-item.active Detalhes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Variáveis para cálculo - Edição
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/calcvars/update/#{calcvars.id}', method='post')
+                       .form-group
+                          label.form-control-label(for='itemlbl') Variável
+                          .controls
+                            .input-group
+                              input#item.form-control(name='item',size='16', type='text', value='#{calcvars.item}', readonly=false)
+                        .form-group
+                          label.form-control-label(for='ProfileDescription') Descrição
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text', value='#{calcvars.description}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Default
+                          .controls
+                            .input-group
+                              input#defaultvalue.form-control(name='defaultvalue',size='16', type='text', value='#{calcvars.defaultvalue}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Mínimo
+                          .controls
+                            .input-group
+                              input#minvalue.form-control(name='minvalue',size='16', type='text', value='#{calcvars.minvalue}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='itemlbl') Valor Máximo
+                          .controls
+                            .input-group
+                              input#maxvalue.form-control(name='maxvalue',size='16', type='text', value='#{calcvars.maxvalue}', readonly=false)             
+                        .form-group
+                          label.form-control-label(for='calctype') Tipo de Cálculo
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='calctype')
+                               each ctype in calctypes
+                                option(value=' #{ctype}') #{ctype}
+                        .form-group
+                          label.form-control-label(for='itemlbl') Tipo de variável
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='valtype')
+                                each vtype in valtypes
+                                 option(value='#{vtype}') #{vtype} 
+                        .form-group
+                          label.form-control-label(for='itemlbl') Index
+                          .controls
+                            .input-group
+                              select#idxno.form-control-sm(name='indexno')
+                                each idxs in indexnos
+                                 option(value='#{idxs}') #{idxs}            
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=calcvars.active == true) Sim
+                                option(value='false', selected=calcvars.active == false) Não
+                        .form-group
+                          label.form-control-label(for='createdAt') Criado em
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{calcvars.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Atualizar   
+                          span     
+                          a(href='/calcvars/show/#{calcvars.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancelar                               

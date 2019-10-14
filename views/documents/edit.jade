@@ -1,0 +1,51 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Compliance Files
+          li.breadcrumb-item.active Edit
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Compliance Files - Edit
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/documents/update/#{documents.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='document_title') Title
+                          .controls
+                            .input-group
+                              input#document_title.form-control(name='document_title',size='100', type='text', value='#{documents.document_title}')                            
+                        .form-group
+                          label.form-control-label(for='comments') Comments
+                          .controls
+                            .input-group
+                              input#comments.form-control(name='comments',size='100', type='text', value='#{documents.document_title}')                            
+                        .form-group
+                          label.col-md-3.form-control-label(for='active') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=documents.active == true) Yes
+                                option(value='false', selected=documents.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', value='#{documents.createdAt}', readonly=true)                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Update   
+                          span     
+                          a(href='/documents/show/#{documents.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancel                               

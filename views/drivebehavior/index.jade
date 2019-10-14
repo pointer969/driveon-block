@@ -1,0 +1,786 @@
+extends ../layout/default
+
+block header
+  script(src='http://js.api.here.com/v3/3.0/mapsjs-core.js', type='text/javascript', charset='utf-8')
+  script(src='http://js.api.here.com/v3/3.0/mapsjs-service.js', type='text/javascript', charset='utf-8')
+  script(type='text/javascript', src='https://js.api.here.com/v3/3.0/mapsjs-ui.js')
+  script(type='text/javascript', src='https://js.api.here.com/v3/3.0/mapsjs-mapevents.js')
+  
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js')
+  script(src='/js/utils.js')
+  
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Drive On
+          li.breadcrumb-item.active Score 
+        .container-fluid
+          .animated.fadeIn
+            .row               
+                .col-sm-6.col-lg-3
+                  .card.text-white.bg-primary
+                    .card-body.pb-0                  
+                      h4.mb-3 
+                        #SumScore 7.92                             
+                      p Overall Score
+                    .chart-wrapper.px-3(style='height:70px;')
+                      canvas#card-chart1.chart(height='70') 
+                    script(type='text/javascript'). 
+                        $(document).ready(function(){ 
+                          $.ajax
+                            ({
+                              type: "get",
+                              url: "/chartScoreEvolution",
+                              dataType: "json",
+                              crossDomain: "false",
+                              contentType: "application/json; charset=UTF-8"                                                             
+                            }).done(function ( data ) {
+                                        
+                                var lbl = []      
+                                var dts = []
+                                //- $.each(data.data, function(index, value) { 
+                                //- var rawDrecv =   value.ScoreDate
+                                //- var cumTot   = value.ScoreValue
+                                var rawDrecv =   "2018-10-18"
+                                var cumTot   = "7.926"
+                                
+                                lbl.push(rawDrecv);
+                                dts.push(cumTot);
+                                //- });
+                                                              
+                                var data = {
+                                  labels: lbl,
+                                  datasets: [
+                                    {
+                                      label: 'Score Diário',
+                                      backgroundColor: $.brandPrimary,
+                                      borderColor: 'rgba(255,255,255,.55)',
+                                      data: dts
+                                    },
+                                  ]
+                                };
+                                var options = {
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                      display: false
+                                    },
+                                    scales: {
+                                      xAxes: [{
+                                        gridLines: {
+                                          color: 'transparent',
+                                          zeroLineColor: 'transparent'
+                                        },
+                                        ticks: {
+                                          fontSize: 2,
+                                          fontColor: 'transparent',
+                                        }
+                                      }],
+                                      yAxes: [{
+                                        display: false,
+                                        ticks: {
+                                          display: false,
+                                          min: Math.min.apply(Math, data.datasets[0].data) - 5,
+                                          max: Math.max.apply(Math, data.datasets[0].data) + 5,
+                                        }
+                                      }],
+                                    },
+                                    elements: {
+                                      line: {
+                                        borderWidth: 1
+                                      },
+                                      point: {
+                                        radius: 4,
+                                        hitRadius: 10,
+                                        hoverRadius: 4,
+                                      },
+                                    }
+                                  };
+                                  //- var ctx = $('#card-chart1');
+                                  var ctx = document.getElementById('card-chart1');                                     
+                                  var cardChart1 = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                  });  
+                            });
+                        }); 
+                .col-sm-6.col-lg-9        
+                  .card.text-grey.bg-secundary  
+                    .card-body.pb-0                  
+                        h4.mb-0 
+                          if (veiculos)
+                           - var vei = veiculos[0].FLEETVEHICLE.REGISTRATION;
+                           - var chassi = veiculos[0].FLEETVEHICLE.VEHICLENUMBER;
+                           - var fleetmobile= veiculos[0].FLEETVEHICLE.INSMSISDN;
+                              #VehicleDtl Placa: #{vei} - Mobile : #{fleetmobile} 
+                              #VehicleDtl1 Chassis: #{chassi}
+                        p Veiculo 
+                    .chart-wrapper.px-3(style='height:45px;')      
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Score
+                    .card-body   
+                      != messages()                       
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Slots
+                            th Peso
+                            th Score (0~10)                          
+                        tbody                             
+                              tr                                
+                                td Comportamento de Condução
+                                td 6.2
+                                td 6.7                                  
+                              tr                                
+                                td Riscos
+                                td 2.8
+                                td 9.9
+                              tr                                
+                                td Comportamento de Manutenção
+                                td 1.0
+                                td 10                                                                                         
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+            .row
+              .col-md-12
+                .chart-wrapper
+                  a
+                    button.btn.btn-sm.secondary(type='button') '18/10/2018 
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Comportamento de Condução - Detalhamento
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Índice
+                            th Valor                          
+                        tbody                             
+                              tr                                
+                                td Curva Brusca
+                                td 0            
+                              tr                                
+                                td Frenagem Brusca
+                                td 9  
+                                 .card                                       
+                                    //-  #canvas(style='width: 500px; height: 400px; background: white')    
+                                    div(style='width:75%;')
+                                     canvas#canvas                                   
+                                      script(type='text/javascript').  
+                                        var MONTHS = ['18/10/2018 10:22',
+                                                        '18/10/2018 10:25',
+                                                        '18/10/2018 10:35',
+                                                        '18/10/2018 10:44',
+                                                        '18/10/2018 10:51',
+                                                        '18/10/2018 11:04',
+                                                        '18/10/2018 11:14',
+                                                        '18/10/2018 11:24',
+                                                        '18/10/2018 11:32',
+                                                        '18/10/2018 11:34',
+                                                        '18/10/2018 11:44',
+                                                        '18/10/2018 11:54',
+                                                        '18/10/2018 12:04',
+                                                        '18/10/2018 12:14',
+                                                        '18/10/2018 12:24',
+                                                        '18/10/2018 12:34',
+                                                        '18/10/2018 12:44',
+                                                        '18/10/2018 12:54',
+                                                        '18/10/2018 13:04',
+                                                        '18/10/2018 13:14',
+                                                        '18/10/2018 13:24',
+                                                        '18/10/2018 13:34',
+                                                        '18/10/2018 13:44',
+                                                        '18/10/2018 13:50',
+                                                        '18/10/2018 14:06',
+                                                        '18/10/2018 14:19',
+                                                        '18/10/2018 14:34',
+                                                        '18/10/2018 15:54',
+                                                        '18/10/2018 16:04',
+                                                        '18/10/2018 16:14',
+                                                        '18/10/2018 16:24',
+                                                        '18/10/2018 16:34',
+                                                        '18/10/2018 16:37',
+                                                        '18/10/2018 16:45',
+                                                        '18/10/2018 16:55',
+                                                        '18/10/2018 17:05',
+                                                        '18/10/2018 17:24',
+                                                        '18/10/2018 17:34',
+                                                        '18/10/2018 17:44',
+                                                        '18/10/2018 17:54',
+                                                        '18/10/2018 18:00',
+                                                        '18/10/2018 18:14',
+                                                        '18/10/2018 18:24',
+                                                        '18/10/2018 18:34',
+                                                        '18/10/2018 18:44',
+                                                        '18/10/2018 18:54',
+                                                        '18/10/2018 19:04',
+                                                        '18/10/2018 19:14',
+                                                        '18/10/2018 19:24',
+                                                        '18/10/2018 19:34',
+                                                        '18/10/2018 19:44',
+                                                        '18/10/2018 19:54',
+                                                        '18/10/2018 20:03',
+                                                        '18/10/2018 20:05',
+                                                        '18/10/2018 20:15'
+                                                        ];
+                                        var config = {
+                                          type: 'line',
+                                          data: {
+                                            labels:['18/10/2018 10:22',
+                                                        '18/10/2018 10:25',
+                                                        '18/10/2018 10:35',
+                                                        '18/10/2018 10:44',
+                                                        '18/10/2018 10:51',
+                                                        '18/10/2018 11:04',
+                                                        '18/10/2018 11:14',
+                                                        '18/10/2018 11:24',
+                                                        '18/10/2018 11:32',
+                                                        '18/10/2018 11:34',
+                                                        '18/10/2018 11:44',
+                                                        '18/10/2018 11:54',
+                                                        '18/10/2018 12:04',
+                                                        '18/10/2018 12:14',
+                                                        '18/10/2018 12:24',
+                                                        '18/10/2018 12:34',
+                                                        '18/10/2018 12:44',
+                                                        '18/10/2018 12:54',
+                                                        '18/10/2018 13:04',
+                                                        '18/10/2018 13:14',
+                                                        '18/10/2018 13:24',
+                                                        '18/10/2018 13:34',
+                                                        '18/10/2018 13:44',
+                                                        '18/10/2018 13:50',
+                                                        '18/10/2018 14:06',
+                                                        '18/10/2018 14:19',
+                                                        '18/10/2018 14:34',
+                                                        '18/10/2018 15:54',
+                                                        '18/10/2018 16:04',
+                                                        '18/10/2018 16:14',
+                                                        '18/10/2018 16:24',
+                                                        '18/10/2018 16:34',
+                                                        '18/10/2018 16:37',
+                                                        '18/10/2018 16:45',
+                                                        '18/10/2018 16:55',
+                                                        '18/10/2018 17:05',
+                                                        '18/10/2018 17:24',
+                                                        '18/10/2018 17:34',
+                                                        '18/10/2018 17:44',
+                                                        '18/10/2018 17:54',
+                                                        '18/10/2018 18:00',
+                                                        '18/10/2018 18:14',
+                                                        '18/10/2018 18:24',
+                                                        '18/10/2018 18:34',
+                                                        '18/10/2018 18:44',
+                                                        '18/10/2018 18:54',
+                                                        '18/10/2018 19:04',
+                                                        '18/10/2018 19:14',
+                                                        '18/10/2018 19:24',
+                                                        '18/10/2018 19:34',
+                                                        '18/10/2018 19:44',
+                                                        '18/10/2018 19:54',
+                                                        '18/10/2018 20:03',
+                                                        '18/10/2018 20:05',
+                                                        '18/10/2018 20:15'
+                                                        ],
+                                            datasets: [{
+                                              label: 'Velocidade (Km/h)',
+                                              backgroundColor: window.chartColors.red,
+                                              borderColor: window.chartColors.red,
+                                              data: [
+                                                '10',
+                                                '0',
+                                                '0',
+                                                '3',
+                                                '0',
+                                                '26',
+                                                '99',
+                                                '103',
+                                                '0',
+                                                '88',
+                                                '85',
+                                                '82',
+                                                '11',
+                                                '90',
+                                                '87',
+                                                '93',
+                                                '90',
+                                                '90',
+                                                '87',
+                                                '90',
+                                                '90',
+                                                '89',
+                                                '61',
+                                                '8',
+                                                '0',
+                                                '2',
+                                                '13',
+                                                '0',
+                                                '21',
+                                                '89',
+                                                '95',
+                                                '18',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '86',
+                                                '90',
+                                                '92',
+                                                '89',
+                                                '0',
+                                                '89',
+                                                '91',
+                                                '71',
+                                                '24',
+                                                '61',
+                                                '90',
+                                                '84',
+                                                '93',
+                                                '38',
+                                                '0',
+                                                '52',
+                                                '6',
+                                                '0',
+                                                '0'],
+                                              fill: false,
+                                            }, {
+                                              label: 'Peso Bruto (T)',
+                                              fill: false,
+                                              backgroundColor: window.chartColors.blue,
+                                              borderColor: window.chartColors.blue,
+                                              data: [
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '13.2',
+                                                '11.6',
+                                                '11.6',
+                                                '11.6',
+                                                '12.8',
+                                                '12.4',
+                                                '11.6',
+                                                '12.4',
+                                                '12.8',
+                                                '12.4',
+                                                '12.4',
+                                                '12.4',
+                                                '12.4',
+                                                '12.4',
+                                                '13.6',
+                                                '12.4',
+                                                '12.8',
+                                                '12.8',
+                                                '10.8',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '39.6',
+                                                '30.8',
+                                                '31.6',
+                                                '30.0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '0',
+                                                '30.8',
+                                                '30.0',
+                                                '30.4',
+                                                '29.2',
+                                                '27.6',
+                                                '31.2',
+                                                '26.4',
+                                                '26.4',
+                                                '26.8',
+                                                '25.2',
+                                                '24.0',
+                                                '23.2',
+                                                '24.8',
+                                                '23.6',
+                                                '24.8',
+                                                '25.2',
+                                                '24.8',
+                                                '24.8',
+                                                '24.8'],
+                                            }]
+                                          },
+                                          options: {
+                                            responsive: true,
+                                            title: {
+                                              display: true,
+                                              text: 'Detalhe Indicador - Frenagem'
+                                            },
+                                            tooltips: {
+                                              mode: 'index',
+                                              intersect: false,
+                                            },
+                                            hover: {
+                                              mode: 'nearest',
+                                              intersect: true
+                                            },
+                                            scales: {
+                                              xAxes: [{
+                                                display: true,
+                                                scaleLabel: {
+                                                  display: true,
+                                                  labelString: 'Tempo'
+                                                }
+                                              }],
+                                              yAxes: [{
+                                                display: true,
+                                                scaleLabel: {
+                                                  display: true,
+                                                  labelString: 'Valores'
+                                                }
+                                              }]
+                                            }
+                                          }
+                                        };
+
+                                        window.onload = function() {
+                                          var ctx = document.getElementById('canvas').getContext('2d');
+                                          window.myLine = new Chart(ctx, config);
+                                        };
+
+                                        document.getElementById('randomizeData').addEventListener('click', function() {
+                                          config.data.datasets.forEach(function(dataset) {
+                                            dataset.data = dataset.data.map(function() {
+                                              return randomScalingFactor();
+                                            });
+
+                                          });
+
+                                          window.myLine.update();
+                                        });
+
+                                        var colorNames = Object.keys(window.chartColors);
+                                        document.getElementById('addDataset').addEventListener('click', function() {
+                                          var colorName = colorNames[config.data.datasets.length % colorNames.length];
+                                          var newColor = window.chartColors[colorName];
+                                          var newDataset = {
+                                            label: 'Dataset ' + config.data.datasets.length,
+                                            backgroundColor: newColor,
+                                            borderColor: newColor,
+                                            data: [],
+                                            fill: false
+                                          };
+
+                                          for (var index = 0; index < config.data.labels.length; ++index) {
+                                            newDataset.data.push(randomScalingFactor());
+                                          }
+
+                                          config.data.datasets.push(newDataset);
+                                          window.myLine.update();
+                                        });
+
+                                        document.getElementById('addData').addEventListener('click', function() {
+                                          if (config.data.datasets.length > 0) {
+                                            var month = MONTHS[config.data.labels.length % MONTHS.length];
+                                            config.data.labels.push(month);
+
+                                            config.data.datasets.forEach(function(dataset) {
+                                              dataset.data.push(randomScalingFactor());
+                                            });
+
+                                            window.myLine.update();
+                                          }
+                                        });
+
+                                        document.getElementById('removeDataset').addEventListener('click', function() {
+                                          config.data.datasets.splice(0, 1);
+                                          window.myLine.update();
+                                        });
+
+                                        document.getElementById('removeData').addEventListener('click', function() {
+                                          config.data.labels.splice(-1, 1); // remove the label first
+
+                                          config.data.datasets.forEach(function(dataset) {
+                                            dataset.data.pop();
+                                          });
+
+                                          window.myLine.update();
+                                        });      
+                              tr                                
+                                td Aceleração Brusca
+                                td 0
+                              tr                                
+                                td Esterçamento Brusco
+                                td 0  
+                              tr                                
+                                td Velocidade(Km/h) Acima do Limite em Curva (Ex: Velocidade[Máx. Permitido no trecho] )
+                                td 2
+                                 .card                                       
+                                      #mapContainer1(style='width: 500px; height: 400px; background: white')                                       
+                                      script(type='text/javascript').
+                                        //- function addPolylineToMap(map) {
+                                        //-     var lineString = new H.geo.LineString();
+                                        //-     lineString.pushPoint({lat:-23.753443, lng:-46.538945});
+                                        //-     lineString.pushPoint({lat:-23.801388, lng:-46.669373});
+
+                                        //-     map.addObject(new H.map.Polyline(
+                                        //-       lineString, { style: { lineWidth: 4 }}
+                                        //-     ));
+                                        //-   }
+                                        var platform = new H.service.Platform({
+                                          app_id: 'YevpXNgekiGoMvb2Wge6',
+                                          app_code: '6jK4ow-mZzPGv8k3_4Yd-A'
+                                        });
+
+                                        var pixelRatio = window.devicePixelRatio || 1;
+                                        var defaultLayers = platform.createDefaultLayers({
+                                          tileSize: pixelRatio === 1 ? 256 : 512,
+                                          ppi: pixelRatio === 1 ? undefined : 320
+                                        });
+                                        var map = new H.Map(document.getElementById('mapContainer1'),
+                                          defaultLayers.normal.map,{
+                                          center: {lat:-23.6848062, lng:-46.6916117},
+                                          zoom: 11,
+                                          pixelRatio: pixelRatio
+                                        });
+                                        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                                        var ui = H.ui.UI.createDefault(map, defaultLayers);
+                                        //- addPolylineToMap(map);   
+                                        var svgMarkup = '<svg width="34" height="34" ' +
+                                                        'xmlns="http://www.w3.org/2000/svg">' +
+                                                        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="70" ' +
+                                                        'height="60" /><text x="12" y="18" font-size="12pt" ' +
+                                                        'font-family="Arial" font-weight="normal" text-anchor="middle" ' +
+                                                        'fill="white">99</text></svg>';  
+                                        var icon = new H.map.Icon(svgMarkup),
+                                          coords = {lat:-23.753443, lng:-46.538945},
+                                          marker = new H.map.Marker(coords, {icon: icon});    
+                                        map.addObject(marker);  
+                                        var svgMarkup2 = '<svg width="34" height="34" ' +
+                                                        'xmlns="http://www.w3.org/2000/svg">' +
+                                                        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="70" ' +
+                                                        'height="60" /><text x="12" y="18" font-size="12pt" ' +
+                                                        'font-family="Arial" font-weight="normal" text-anchor="middle" ' +
+                                                        'fill="white">103</text></svg>';  
+                                        var icon2 = new H.map.Icon(svgMarkup2),
+                                          coords = {lat:-23.801388, lng:-46.669373},
+                                          marker2 = new H.map.Marker(coords, {icon: icon2});   
+                                        map.addObject(marker2);              
+                              tr                                
+                                td Tempo Direção
+                                td 05:29:50
+                              tr                                
+                                td KM Rodado
+                                td 391                                                                                            
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Risco - Detalhamento
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Índice
+                            th Valor                          
+                        tbody                             
+                              tr                                
+                                td Geolocalização
+                                td 
+                                  .card                                       
+                                      #mapContainer(style='width: 500px; height: 400px; background: white')                                       
+                                      script(type='text/javascript').
+                                        function addPolylineToMap(map) {
+                                            var lineString = new H.geo.LineString();
+                                            lineString.pushPoint({lat:-23.659758, lng:-46.590880}); //2018-10-18 10:21:30
+                                            lineString.pushPoint({lat:-23.659945, lng:-46.591033});
+                                            lineString.pushPoint({lat:-23.659993, lng:-46.591050});
+                                            lineString.pushPoint({lat:-23.660032, lng:-46.591060});
+                                            lineString.pushPoint({lat:-23.660003, lng:-46.591062});
+                                            lineString.pushPoint({lat:-23.659908, lng:-46.590962});
+                                            lineString.pushPoint({lat:-23.659787, lng:-46.591065});
+                                            lineString.pushPoint({lat:-23.659738, lng:-46.591068});
+                                            lineString.pushPoint({lat:-23.659870, lng:-46.591595});
+                                            lineString.pushPoint({lat:-23.660992, lng:-46.593205});
+                                            lineString.pushPoint({lat:-23.660992, lng:-46.593205});
+                                            lineString.pushPoint({lat:-23.660420, lng:-46.593830});
+                                            lineString.pushPoint({lat:-23.658482, lng:-46.594833});
+                                            lineString.pushPoint({lat:-23.657435, lng:-46.595260});
+                                            lineString.pushPoint({lat:-23.657027, lng:-46.595428});
+                                            lineString.pushPoint({lat:-23.654905, lng:-46.593735});
+                                            lineString.pushPoint({lat:-23.653320, lng:-46.591908});
+                                            lineString.pushPoint({lat:-23.651198, lng:-46.589898});
+                                            lineString.pushPoint({lat:-23.649643, lng:-46.588860});
+                                            lineString.pushPoint({lat:-23.648077, lng:-46.586802});
+                                            lineString.pushPoint({lat:-23.649407, lng:-46.584242});
+                                            lineString.pushPoint({lat:-23.649565, lng:-46.582152});
+                                            lineString.pushPoint({lat:-23.653295, lng:-46.579485});
+                                            lineString.pushPoint({lat:-23.660000, lng:-46.576173});
+                                            lineString.pushPoint({lat:-23.666355, lng:-46.573302});
+                                            lineString.pushPoint({lat:-23.674187, lng:-46.570170});
+                                            lineString.pushPoint({lat:-23.681255, lng:-46.567758});
+                                            lineString.pushPoint({lat:-23.687770, lng:-46.565530});
+                                            lineString.pushPoint({lat:-23.694743, lng:-46.563203});
+                                            lineString.pushPoint({lat:-23.701465, lng:-46.561395});
+                                            lineString.pushPoint({lat:-23.708285, lng:-46.561413});
+                                            lineString.pushPoint({lat:-23.714652, lng:-46.561233});
+                                            lineString.pushPoint({lat:-23.719697, lng:-46.556778});
+                                            lineString.pushPoint({lat:-23.724173, lng:-46.552208});
+                                            lineString.pushPoint({lat:-23.729195, lng:-46.548363});
+                                            lineString.pushPoint({lat:-23.734383, lng:-46.544125});
+                                            lineString.pushPoint({lat:-23.740882, lng:-46.541165});
+                                            lineString.pushPoint({lat:-23.747388, lng:-46.539158});
+                                            lineString.pushPoint({lat:-23.753443, lng:-46.538945});
+                                            lineString.pushPoint({lat:-23.758532, lng:-46.545222});
+                                            lineString.pushPoint({lat:-23.762717, lng:-46.550777});
+                                            lineString.pushPoint({lat:-23.760760, lng:-46.557327});
+                                            lineString.pushPoint({lat:-23.756480, lng:-46.563880});
+                                            lineString.pushPoint({lat:-23.759007, lng:-46.571063});
+                                            lineString.pushPoint({lat:-23.763138, lng:-46.577197});
+                                            lineString.pushPoint({lat:-23.763743, lng:-46.584723});
+                                            lineString.pushPoint({lat:-23.763647, lng:-46.592707});
+                                            lineString.pushPoint({lat:-23.767500, lng:-46.599612});
+                                            lineString.pushPoint({lat:-23.771475, lng:-46.606180});
+                                            lineString.pushPoint({lat:-23.775118, lng:-46.612432});
+                                            lineString.pushPoint({lat:-23.778470, lng:-46.618852});
+                                            lineString.pushPoint({lat:-23.781823, lng:-46.625265});
+                                            lineString.pushPoint({lat:-23.784988, lng:-46.631327});
+                                            lineString.pushPoint({lat:-23.788122, lng:-46.637323});
+                                            lineString.pushPoint({lat:-23.790415, lng:-46.643892});
+                                            lineString.pushPoint({lat:-23.791117, lng:-46.651158});
+                                            lineString.pushPoint({lat:-23.791755, lng:-46.658617});
+                                            lineString.pushPoint({lat:-23.795355, lng:-46.664667});
+                                            lineString.pushPoint({lat:-23.801388, lng:-46.669373});
+                                            lineString.pushPoint({lat:-23.806490, lng:-46.675917});
+                                            lineString.pushPoint({lat:-23.807468, lng:-46.683890});
+                                            lineString.pushPoint({lat:-23.805895, lng:-46.691965});
+                                            lineString.pushPoint({lat:-23.804320, lng:-46.699918});
+                                            lineString.pushPoint({lat:-23.804008, lng:-46.707803});
+                                            lineString.pushPoint({lat:-23.804290, lng:-46.716322});
+                                            lineString.pushPoint({lat:-23.804523, lng:-46.724340});
+                                            lineString.pushPoint({lat:-23.803662, lng:-46.732050});
+                                            lineString.pushPoint({lat:-23.800965, lng:-46.739257});
+                                            lineString.pushPoint({lat:-23.798015, lng:-46.746023});
+                                            lineString.pushPoint({lat:-23.795245, lng:-46.751948});
+                                            lineString.pushPoint({lat:-23.791775, lng:-46.758727});
+                                            lineString.pushPoint({lat:-23.785060, lng:-46.762335});
+                                            lineString.pushPoint({lat:-23.780585, lng:-46.762758});
+                                            lineString.pushPoint({lat:-23.779318, lng:-46.763147});
+                                            lineString.pushPoint({lat:-23.778992, lng:-46.763322});
+                                            lineString.pushPoint({lat:-23.775080, lng:-46.764322});
+                                            lineString.pushPoint({lat:-23.768990, lng:-46.765855});
+                                            lineString.pushPoint({lat:-23.764193, lng:-46.770733});
+                                            lineString.pushPoint({lat:-23.760645, lng:-46.776548});
+                                            lineString.pushPoint({lat:-23.759105, lng:-46.782992});
+                                            lineString.pushPoint({lat:-23.756810, lng:-46.789130});
+                                            lineString.pushPoint({lat:-23.754273, lng:-46.795467});
+                                            lineString.pushPoint({lat:-23.751542, lng:-46.801402});
+                                            lineString.pushPoint({lat:-23.748857, lng:-46.806872});
+                                            lineString.pushPoint({lat:-23.744912, lng:-46.811808});
+                                            lineString.pushPoint({lat:-23.738673, lng:-46.813330});
+                                            lineString.pushPoint({lat:-23.732757, lng:-46.810645});
+                                            lineString.pushPoint({lat:-23.727118, lng:-46.807380});
+                                            lineString.pushPoint({lat:-23.720692, lng:-46.806015});
+                                            lineString.pushPoint({lat:-23.713932, lng:-46.807125});
+                                            lineString.pushPoint({lat:-23.707280, lng:-46.810603});
+                                            lineString.pushPoint({lat:-23.701037, lng:-46.814208});
+                                            lineString.pushPoint({lat:-23.694860, lng:-46.817772});
+                                            lineString.pushPoint({lat:-23.688278, lng:-46.818680});
+                                            lineString.pushPoint({lat:-23.681393, lng:-46.819977});
+                                            lineString.pushPoint({lat:-23.674882, lng:-46.823597});
+                                            lineString.pushPoint({lat:-23.667798, lng:-46.823833});
+                                            lineString.pushPoint({lat:-23.661118, lng:-46.823777});
+                                            lineString.pushPoint({lat:-23.655077, lng:-46.826695});
+                                            lineString.pushPoint({lat:-23.649058, lng:-46.829777}); //2018-10-18 11:45:38   
+
+
+                                            map.addObject(new H.map.Polyline(
+                                              lineString, { style: { lineWidth: 4 }}
+                                            ));
+                                          }
+                                        var platform = new H.service.Platform({
+                                          app_id: 'YevpXNgekiGoMvb2Wge6',
+                                          app_code: '6jK4ow-mZzPGv8k3_4Yd-A'
+                                        });
+
+                                        var pixelRatio = window.devicePixelRatio || 1;
+                                        var defaultLayers = platform.createDefaultLayers({
+                                          tileSize: pixelRatio === 1 ? 256 : 512,
+                                          ppi: pixelRatio === 1 ? undefined : 320
+                                        });
+                                        var map = new H.Map(document.getElementById('mapContainer'),
+                                          defaultLayers.normal.map,{
+                                          center: {lat:-23.6848062, lng:-46.6916117},
+                                          zoom: 11,
+                                          pixelRatio: pixelRatio
+                                        });
+                                        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                                        var ui = H.ui.UI.createDefault(map, defaultLayers);
+                                        addPolylineToMap(map);                                                
+                              tr                                
+                                td Turno (Santo André[Sunrise 5:29:46 am / Sunset 6:12:45 pm] -   Embu das Artes[Sunrise 5:30:58 am / Sunset 6:13:53 pm]) by Sunrise-Sunset.org
+                                td Diurno 04:13:50 / Noturno : 01:16:00       
+                              tr                                
+                                td Repetição de trecho no dia
+                                td 1
+                              tr                                
+                                td Tempo de direção em riscos
+                                td 0   
+                              tr                                
+                                td Pernoite
+                                td 0                                                                                         
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)   
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Comportamento de Manutenção - Detalhamento
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Índice
+                            th Valor                          
+                        tbody                             
+                              tr                                
+                                td DTCs
+                                td 0            
+                              tr                                
+                                td Nível Bateria
+                                td 0       
+                              tr                                
+                                td Nível de Oléo de Motor
+                                td 2.94
+                              tr                                
+                                td Freios
+                                td 7%                                  
+                              tr                                
+                                td Combustível
+                                td 139
+                              tr                                
+                                td Temperatura do Bloco do Motor
+                                td 0 
+                              tr                                
+                                td Tempo de direção
+                                td 05:29:50  
+                              tr                                
+                                td KM Rodado
+                                td 391                                                                                                                         
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)                                                                                

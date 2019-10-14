@@ -1,0 +1,107 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configuration
+          li.breadcrumb-item TAG
+          li.breadcrumb-item.active Edit
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  TAG - Edit
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/devices/update/#{devices.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='devicelbl') TAG
+                          .controls
+                            .input-group
+                              input#device.form-control(name='device',size='16', type='text', value='#{devices.device}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='supplier') Supplier
+                          .controls
+                            .input-group
+                              input#supplier.form-control(name='supplier',size='100', type='text', value='#{devices.supplier}', readonly=false)   
+                        .form-group
+                          label.form-control-label(for='supplier') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text', value='#{devices.description}', readonly=false)   
+                        .form-group
+                          label.form-control-label(for='firmware') Firmware
+                          .controls
+                            .input-group
+                              input#Firmware.form-control(name='firmware',size='16', type='text', value='#{devices.firmware}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='version') Firmware Version
+                          .controls
+                            .input-group
+                              input#version.form-control(name='version',size='16', type='text', value='#{devices.version}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='version') SIM Number
+                          .controls
+                            .input-group
+                              input#simnumber.form-control(name='simnumber',size='16', type='text', value='#{devices.simnumber}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='sms_srv_addr') SMS Server IP
+                          .controls
+                            .input-group
+                              input#sms_srv_addr.form-control(name='sms_srv_addr',size='16', type='text', value='#{devices.sms_srv_addr}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='sms_srv_key') SMS Server Key
+                          .controls
+                            .input-group
+                              input#sms_srv_key.form-control(name='sms_srv_key',size='16', type='password', value='#{devices.sms_srv_key}', readonly=false)                   
+                        .form-group
+                          label.form-control-label(for='sms_apn') SMS APN
+                          .controls
+                            .input-group
+                              input#sms_apn.form-control(name='sms_apn',size='16', type='text', value='#{devices.sms_apn}', readonly=false)   
+                        .form-group
+                          label.form-control-label(for='sms_user') SMS User
+                          .controls
+                            .input-group
+                              input#sms_user.form-control(name='sms_user',size='16', type='text', value='#{devices.sms_user}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='sms_password') SMS Password
+                          .controls
+                            .input-group
+                              input#sms_password.form-control(name='sms_password',size='16', type='password', value='#{devices.sms_password}', readonly=false)  
+                        .form-group
+                          label.form-control-label(for='sms_set_ip') SMS IP
+                          .controls
+                            .input-group
+                              input#sms_set_ip.form-control(name='sms_set_ip',size='16', type='text', value='#{devices.sms_set_ip}', readonly=false)    
+                        .form-group
+                          label.form-control-label(for='sms_set_port') SMS Port
+                          .controls
+                            .input-group
+                              input#sms_set_port.form-control(name='sms_set_port',size='16', type='text', value='#{devices.sms_set_port}', readonly=false)    
+                        .form-group 
+                          label.col-md-3.form-control-label(for='activedYN') Active?                         
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=false)
+                                option(value='true', selected=devices.active == true) Yes
+                                option(value='false', selected=devices.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{devices.createdAt}')                                                                                                              
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-edit
+                            |  Update   
+                          span     
+                          a(href='/devices/show/#{devices.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='button')
+                              i.fa.fa-ban
+                              |  Cancel                               

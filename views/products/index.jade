@@ -1,0 +1,49 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Product
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Product
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Product
+                            th Description
+                            th UOM
+                            th Species                            
+                        tbody                                                  
+                             each product in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/products/delete/#{product.id}', method='post')                                      
+                                      a(href='/products/edit/#{product.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{product.product}
+                                td #{product.description}
+                                td #{product.standard_uom}
+                                td #{product.species}                                                                                           
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/products/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

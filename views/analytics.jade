@@ -1,0 +1,439 @@
+extends layout/default
+
+block content
+ 
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Drivers
+          li.breadcrumb-item Analytics 
+        .container-fluid
+          .animated.fadeIn 
+                        .form-group
+                            label.form-control-label(for='devicelbl') Veiculo
+                            .controls
+                              .input-group
+                                span.input-group-btn
+                                  button#btnrefresh.btn.btn-primary(type='submit')
+                                    i.fa.fa-search
+                                    |  Search
+                                if list
+                                select#vehicle.form-control(name='vehicle')
+                                    each car in list
+                                      option(value='#{car.device}') #{car.plate}                                       
+              .card-columns.cols-2
+                .card
+                  .card-header
+                    | Condições da Bateria (Volts)                   
+                  .card-body
+                    .chart-wrapper
+                      canvas#canvas-1(width="400" height="400")  
+                  .card-footer
+                    | Conforme relatado no gráfico acima, o recomendável é ter
+                    | um nivel entre 11V a 13V. Qualquer valor abaixo indica desgaste da bateria
+                    | e acima representa sobre tensão. Sendo ambos os casos desvios e redução de vida útil da bateria ou falha do alternador.
+                  script(src='#{baseuri}bower_components/jquery/dist/jquery.min.js').
+                  script(src='#{baseuri}bower_components/chart.js/dist/Chart.min.js').
+                  script(type='text/javascript').                    
+                      $(document).ready(function(){
+                          $('#btnrefresh').click(function(){                                
+                                var dongle = $('#vehicle').val();   
+                                var devic ;                              
+                                 $.ajax
+                                ({
+                                  type: "post",
+                                  url: "/getvoltage/"+dongle,
+                                  dataType: "json",
+                                  crossDomain: "false",
+                                  contentType: "application/json; charset=UTF-8"                                                             
+                                }).done(function ( data ) {              
+                                      //- grafico 1
+                                      var lbl = []      
+                                      var dts = []
+                                      var xs1 = []
+                                      var xs2 = []
+                                      var xs3 = []
+                                      var xs4 = []
+                                      var xs5 = []
+                                      var ys1 = []
+                                      var ys2 = []
+                                      var ys3 = []
+                                      var ys4 = []
+                                      var ys5 = []
+                                      var zs1 = []
+                                      var zs2 = []
+                                      var zs3 = []
+                                      var zs4 = []
+                                      var zs5 = []
+                                      var fueltrip = []
+                                      var timetrip = []
+                                      var milestrip = []
+
+                                      $.each(data, function(index, value) {      //Cards with Charts
+                                          var rawDrecv = value.dateReceived
+                                          var volts   = value.voltage
+                                          var devic = value.dongleCode
+
+                                          var tx1 = value.gsensor_g1.x
+                                          var tx2 = value.gsensor_g2.x
+                                          var tx3 = value.gsensor_g3.x
+                                          var tx4 = value.gsensor_g4.x
+                                          var tx5 = value.gsensor_g5.x
+
+                                          var ty1 = value.gsensor_g1.y
+                                          var ty2 = value.gsensor_g2.y
+                                          var ty3 = value.gsensor_g3.y
+                                          var ty4 = value.gsensor_g4.y
+                                          var ty5 = value.gsensor_g5.y
+
+                                          var tz1 = value.gsensor_g1.z
+                                          var tz2 = value.gsensor_g2.z
+                                          var tz3 = value.gsensor_g3.z
+                                          var tz4 = value.gsensor_g4.z
+                                          var tz5 = value.gsensor_g5.z
+
+                                          var ftrip = value.currentTripFuelConsumption
+                                          var ttrip = value.currentTripDuration
+                                          var mtrip = value.currentTripMileage
+                                          //- rawDrecv =  rawDrecv.toString().substr(6,2) + '/' + rawDrecv.toString().substr(4,2)  
+
+                                          lbl.push(rawDrecv);
+                                          dts.push(volts);
+
+                                          fueltrip.push(ftrip);
+                                          timetrip.push(ttrip);
+                                          milestrip.push(mtrip);
+                                          xs1.push(tx1);
+                                          xs2.push(tx2);
+                                          xs3.push(tx3);
+                                          xs4.push(tx4);
+                                          xs5.push(tx5);
+
+                                          ys1.push(ty1);
+                                          ys2.push(ty2);
+                                          ys3.push(ty3);
+                                          ys4.push(ty4);
+                                          ys5.push(ty5);
+
+                                          zs1.push(tz1);
+                                          zs2.push(tz2);
+                                          zs3.push(tz3);
+                                          zs4.push(tz4);
+                                          zs5.push(tz5);
+                                      });                                                                                  
+
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: devic,
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : dts
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-1');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                      //- grafico 2
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Sensor 1',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : xs1
+                                            },
+                                             {
+                                              label: 'Sensor 2',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : xs2
+                                            },
+                                             {
+                                              label: 'Sensor 3',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : xs3
+                                            },
+                                             {
+                                              label: 'Sensor 4',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : xs4
+                                            },
+                                             {
+                                              label: 'Sensor 5',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : xs5
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-2');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Sensor 1',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : ys1
+                                            },
+                                             {
+                                              label: 'Sensor 2',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : ys2
+                                            },
+                                             {
+                                              label: 'Sensor 3',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : ys3
+                                            },
+                                             {
+                                              label: 'Sensor 4',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : ys4
+                                            },
+                                             {
+                                              label: 'Sensor 5',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : ys5
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-3');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Sensor 1',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : zs1
+                                            },
+                                             {
+                                              label: 'Sensor 2',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : zs2
+                                            },
+                                             {
+                                              label: 'Sensor 3',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : zs3
+                                            },
+                                             {
+                                              label: 'Sensor 4',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : zs4
+                                            },
+                                             {
+                                              label: 'Sensor 5',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : zs5
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-4');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Litros x dia',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : fueltrip
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-5');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Tempoo x dia',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : timetrip
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-7');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : lbl,
+                                          datasets : [
+                                            {
+                                              label: 'Tempo x dia',
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : milestrip
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-8');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+                                });
+
+                          });
+                      });
+                //- .card
+                //-   .card-header
+                //-     | Analise de Movimentação(Hz)  - Frente e Ré                   
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-2(width="400" height="400")
+                //-   .card-footer
+                    //- | Conforme relatado no gráfico acima, o recomendável é ter
+                    //- | uma temperatura entre -40 a 215 graus. Qualquer valor acima indica imediata intervênção mecanica.
+                    //- | Favor realizar revisão do motor o mais breve possível.
+                //- .card
+                //-   .card-header
+                //-     | Analise de Movimentação(Hz) - Cima e Baixo 
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-3
+                //-   .card-footer    
+                //- .card                
+                //-   .card-header
+                //-     | Analise de Movimentação(Hz) - Esqerda e Direita                   
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-4
+                //- .card
+                //-   .card-header
+                //-     | Consumo Médio (Litros) por trajetos
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-5
+                //- .card
+                //-   .card-header
+                //-     | DTCs
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-6   
+                //- .card
+                //-   .card-header
+                //-     | Duração nas viagens
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-7 
+                //- .card
+                //-   .card-header
+                //-     | Espaço percorrido Acumulado
+                //-   .card-body
+                //-     .chart-wrapper
+                //-       canvas#canvas-8                               

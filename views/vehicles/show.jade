@@ -1,0 +1,99 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Veículos
+          li.breadcrumb-item.active Detalhes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Veículos - Detalhes
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/vehicles/delete/#{vehicles.id}', method='post')                         
+                        .form-group
+                          label.form-control-label(for='plate') Placa
+                          .controls
+                            .input-group                              
+                              input#plate.form-control(name='plate',size='100', type='text', value='#{vehicles.plate}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='plate') Device
+                          .controls
+                            .input-group
+                              - var devname = vehicles.device.device;
+                              input#device.form-control(name='device',size='100', type='text', value='#{devname}', readonly=true) 
+                       .form-group
+                          label.form-control-label(for='plate') Conta
+                          .controls
+                            .input-group
+                              - var customername = vehicles.customer.fullname;
+                              input#customer.form-control(name='customer',size='100', type='text', value='#{customername}', readonly=true)            
+                        .form-group
+                          label.form-control-label(for='businesscode') Chassis
+                          .controls
+                            .input-group
+                              input#vin.form-control(name='vin',size='20', type='text', value='#{vehicles.vin}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='address1') Modelo
+                          .controls
+                            .input-group
+                              input#model.form-control(name='model',size='100', type='text', value='#{vehicles.model}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='address2') Cor
+                          .controls
+                            .input-group
+                              input#color.form-control(name='color',size='100', type='text', value='#{vehicles.color}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='zipcode') Estado
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='16', type='text', value='#{vehicles.state}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='district') Motor
+                          .controls
+                            .input-group
+                              input#motor.form-control(name='motor',size='100', type='text', value='#{vehicles.motor}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='city') Combustível
+                          .controls
+                            .input-group
+                              input#fueltype.form-control(name='fueltype',size='16', type='text', value='#{vehicles.fueltype}', readonly=true)                                    
+                        .form-group
+                          label.form-control-label(for='province') Ano de Fabricação
+                          .controls
+                            .input-group
+                              input#manufYear.form-control(name='manufYear',size='16', type='text', value='#{vehicles.manufYear}', readonly=true)  
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=vehicles.active == true) Sim
+                                option(value='false', selected=vehicles.active == false) Não
+                        .form-group
+                          label.form-control-label(for='createdAt') Criado em
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{vehicles.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/vehicles/edit/#{vehicles.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Editar   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Deletar   
+                          span         
+                          a(href='/vehicles')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Voltar a lista                               

@@ -1,0 +1,246 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Batch
+          li.breadcrumb-item.active Shipping (Lakes)  - Compliance Hint (Sheet 31 - Form E.1 20)
+        .container-fluid
+          .animated.fadeIn            
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-cube
+                      |  Shipping
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/processing/batch/shipping/save', method='post')
+                        input#active(type='hidden', name='active')
+                        input#species(type='hidden', name='species')
+                        input#description(type='hidden', name='description')
+                        input#suppliernm(type='hidden', name='suppliernm')   
+                        input#serial(type='hidden', name='serial')                      
+                        .col-md-12.mb-8
+                          ul.nav.nav-tabs(role='tablist')
+                            li.nav-item
+                              a.nav-link.active.show(data-toggle='tab', href='#header', role='tab', aria-controls='header', aria-selected='true') Shipping Info.                           
+                            li.nav-item
+                              a.nav-link(data-toggle='tab', href='#transport', role='tab', aria-controls='transport', aria-selected='false') Quality                            
+                            li.nav-item
+                              a.nav-link(data-toggle='tab', href='#product', role='tab', aria-controls='product', aria-selected='false') Product
+                          .tab-content
+                            #header.tab-pane.active.show(role='tabpanel')
+                              .form-group
+                                label.form-control-label(for='so') Sales Order
+                                .controls
+                                  .input-group
+                                    input#so.form-control(name='so',size='100', type='text',value='#{nextlot}')
+                              .form-group
+                                  label.form-control-label(for='customer') Customer
+                                  .controls
+                                    .input-group
+                                      select#customer.form-control-sm(name='customer')
+                                        if (customers)
+                                          each customer in customers
+                                            option(value='#{customer.id}') #{customer.businesscode} - #{customer.fullname}  
+                                         else
+                                            option(value='') No Customer                                  
+                              .form-group
+                                label.form-control-label(for='nf') Nota Fiscal
+                                .controls
+                                  .input-group
+                                    input#so.form-control(name='nf',size='50', type='number')
+                              .form-group
+                                label.form-control-label(for='serie') Serie
+                                .controls
+                                  .input-group
+                                    input#serie.form-control(name='serie',size='50', type='number')
+                              .form-group
+                                    label.form-control-label(for='date') Issue Date
+                                    .controls
+                                      .input-group
+                                        #d_nf.input-group.date
+                                          input.form-control(type='text',name='d_nf')
+                                          span.input-group-addon
+                                            span.fa.fa-calendar
+                                        script(type='text/javascript').
+                                          $(function () {
+                                            $('#d_nf').datetimepicker({
+                                              format: 'L',
+                                              icons: {
+                                                  time: "fa fa-clock-o",
+                                                  date: "fa fa-calendar",
+                                                  up: "fa fa-arrow-up",
+                                                  down: "fa fa-arrow-down"
+                                              }
+                                            });
+                                          });        
+                              .form-group
+                                label.form-control-label(for='status') Status
+                                .controls
+                                  .input-group
+                                    input#status.form-control(name='status',size='100', type='text', value='#{lotstatus}', readonly=true)   
+                            #transport.tab-pane(role='tabpanel')
+                             .card.card-accent-primary
+                              .card-header
+                                | Cargo Info
+                              .card-body    
+                                .form-group
+                                  label.form-control-label(for='drivername') Driver
+                                  .controls
+                                    .input-group
+                                      select#drivername.form-control-sm(name='drivername')
+                                        if (drivers)
+                                          each driver in drivers
+                                            option(value='#{driver.id}') #{driver.name} 
+                                .form-group
+                                  label.form-control-label(for='plate') Vehicle
+                                  .controls
+                                    .input-group
+                                      select#plate.form-control-sm(name='plate')
+                                        if (vehicles)
+                                          each vehicle in vehicles
+                                            option(value='#{vehicle.id}') #{vehicle.plate} 
+                                .card.card-accent-primary
+                                  .card-header
+                                    | Vehicle Quality Conditions
+                                  .card-body    
+                                    .form-group
+                                      label.form-control-label(for='thermoking') Thermoking
+                                      .controls
+                                        .input-group
+                                          select#thermoking.form-control-sm(name='thermoking')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming        
+                                    .form-group
+                                      label.form-control-label(for='truckconditions') Truck Conditions
+                                      .controls
+                                        .input-group
+                                          select#truckconditions.form-control-sm(name='truckconditions')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming          
+                                    .form-group
+                                      label.form-control-label(for='threshing') Threshing
+                                      .controls
+                                        .input-group
+                                          select#threshing.form-control-sm(name='threshing')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming          
+                                    .form-group
+                                      label.form-control-label(for='floor') Floor
+                                      .controls
+                                        .input-group
+                                          select#floor.form-control-sm(name='floor')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming    
+                                    .form-group
+                                      label.form-control-label(for='sides') Sides
+                                      .controls
+                                        .input-group
+                                          select#sides.form-control-sm(name='sides')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming 
+                                    .form-group
+                                      label.form-control-label(for='pallets') Pallets
+                                      .controls
+                                        .input-group
+                                          select#pallets.form-control-sm(name='pallets')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming          
+                                    .form-group
+                                      label.form-control-label(for='rubber') Rubber
+                                      .controls
+                                        .input-group
+                                          select#rubber.form-control-sm(name='rubber')
+                                            option(value='C') Conforming
+                                            option(value='NC') Non-Conforming                  
+                                .form-group
+                                  label.form-control-label(for='destination') Destination
+                                  .controls
+                                    .input-group
+                                      select#destination.form-control-sm(name='destination', placeholder='Destination')
+                                        option(value='USA') USA
+                                        option(value='CHILE') CHILE   
+                                        option(value='MI') M.I.
+                                        option(value='OTHERS') OTHERS
+                                .form-group
+                                  label.form-control-label(for='status') Other destination
+                                  .controls
+                                    .input-group
+                                      input#otherdestination.form-control(name='otherdestination',size='100', type='text')           
+                                .form-group
+                                    label.form-control-label(for='utime1') Loading Duration
+                                    .container
+                                      .col-md-6
+                                        .form-group
+                                          #utime1.input-group.date
+                                            input.form-control(type='text',name='utime1')
+                                            span.input-group-addon
+                                              span.fa.fa-clock
+                                      .col-md-6
+                                        .form-group
+                                          #utime2.input-group.date
+                                            input.form-control(type='text',name='utime2')
+                                            span.input-group-addon
+                                              span.fa.fa-clock
+                                    script(type='text/javascript').
+                                      $(function () {
+                                        $('#utime1').datetimepicker({
+                                           format: 'HH:m'
+                                        });
+                                        $('#utime2').datetimepicker({
+                                          format: 'HH:m'
+                                        });
+                                      });       
+                                .form-group
+                                  label.form-control-label(for='monitoringBy') Monitoring by 
+                                  .controls
+                                    .input-group
+                                      input#monitoringBy.form-control(name='monitoringBy',size='100', type='text')                                                                        
+                                .form-group
+                                  label.form-control-label(for='temperature') Conteiner Temperature (Celsius) 
+                                  .controls
+                                    .input-group
+                                      input#temperature.form-control(name='temperature',size='100', type='text')                                                                              
+                            #product.tab-pane(role='tabpanel')
+                             .card.card-accent-primary
+                              .card-header
+                                | Products
+                              .card-body    
+                                .form-group
+                                 .controls
+                                  .input-group
+                                    span.input-group-prepend
+                                      button.btn.btn-primary(type='button',onclick='getLotByTAGINV()')
+                                        i.fa.fa-search
+                                        |  Search
+                                    input#tag.form-control(type='text ', name='tag', placeholder='TAG')  
+                                .form-group
+                                  .col-md-6
+                                    label.form-control-label(for='productone') Add Products
+                                    .controls
+                                      .input-group                                      
+                                        input#lotid(name='lotid', type='hidden')
+                                        input#lotno(name='lotno', type='hidden') 
+                                        input#productone.form-control-sm(name='productone', type='text', placeholder='Product', readonly=true)
+                                    .controls
+                                      .input-group                                      
+                                        input#qty.form-control-sm(name='qty', type='number',placeholder='Qty') 
+                                    .controls
+                                      .input-group                                                                            
+                                        button#btnaddlot.btn.btn-sm.secondary(name='btnaddlot',type='button',onclick='setLotList()') Add   
+                                        button#btndellot.btn.btn-sm.warning(name='btndellot',type='button',onclick='unsetLotList()') Remove   
+                                    .controls    
+                                      .input-group
+                                        select#lotlist.form-control-sm(name='lotlist',size='5', multiple='')                                                                             
+                              .form-actions
+                                button.btn.btn-sm.primary(type='submit') Save
+                                span
+                                a(href='/processing/batch/shipping') 
+                                button.btn.btn-sm.secondary(type='button') Cancel                                                                                  

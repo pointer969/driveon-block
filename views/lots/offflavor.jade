@@ -1,0 +1,103 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Receive
+          li.breadcrumb-item.active Off-Flavor Quality Control (Lakes)
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-question-circle
+                      |  Off-Flavor Quality Control (Lakes)
+                    .card-body 
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button ',onclick='getLotByTAGOF()')
+                                  i.fa.fa-search
+                                  |  Search
+                              input#tag.form-control(type='text ', name='tag', placeholder='TAG')  
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-info
+                      |  Lot Info.
+                    .card-body                                              
+                      != messages()                      
+                         input#lotno.form-control(name='lotno', type='hidden')
+                         input#product.form-control(name='product', type='hidden')
+                        .form-group
+                          label.form-control-label(for='lotnm') Lot No
+                          .controls
+                            .input-group
+                              input#lotnm.form-control(name='lotnm',size='100', type='text',readonly=true)
+                        .form-group
+                          label.form-control-label(for='pproduct') Product
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text',readonly=true) 
+                        .form-group
+                          label.form-control-label(for='tank') Fish Tank
+                          .controls
+                            .input-group
+                              input#tank.form-control(name='tank',size='100', type='text',readonly=true)
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Samples
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/receive/offflavor/save', method='post')
+                        input#lotid.form-control(name='lotid', type='hidden')
+                        input#product.form-control(name='product', type='hidden')
+                        input#tank.form-control(name='tank', type='hidden')                    
+                        .form-group.row
+                          label.col-md-3.col-form-label(for='offflavor') Off flavor
+                          .col-md-9
+                            select#multiple-select.form-control(name='offflavor', size='5', multiple='')
+                              option(value='1') No Smell
+                              option(value='2') Weak
+                              option(value='3') Moderate
+                              option(value='4') Strong
+                              option(value='5') Very Strong                              
+                        .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              #udate.input-group.date
+                                input.form-control(type='text',name='udate')
+                                span.input-group-addon
+                                  span.fa.fa-calendar
+                              script(type='text/javascript').
+                                $(function () {
+                                  $('#udate').datetimepicker({
+                                    format: 'L',
+                                    icons: {
+                                        time: "fa fa-clock-o",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down"
+                                    }
+                                  });
+                                });
+                        .form-group
+                          label.form-control-label(for='medias') Media (Kg)
+                          .controls
+                            .input-group
+                              input#medias.form-control(name='medias',size='100', type='number')                                                                          
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/receive/offflavorqc') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                                  

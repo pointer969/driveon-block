@@ -1,0 +1,115 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configuration
+          li.breadcrumb-item Supplier
+          li.breadcrumb-item.active Details
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Supplier - Details
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/suppliers/delete/#{suppliers.id}', method='post') 
+                        .form-group
+                          label.form-control-label(for='lsupplier') CPF / CNPJ
+                          .controls
+                            .input-group
+                              input#supplier.form-control(name='supplier',size='100', type='text', value='#{suppliers.supplier}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='nname') Supplier Name
+                          .controls
+                            .input-group
+                              input#name.form-control(name='name',size='100', type='text', value='#{suppliers.name}', readonly=true)    
+                        .form-group
+                          label.form-control-label(for='email') eMail
+                          .controls
+                            .input-group
+                              input#email.form-control(name='email',size='100', type='email', value='#{suppliers.email}', readonly=true)    
+                        .form-group
+                          label.form-control-label(for='commercialName') Business Name
+                          .controls
+                            .input-group
+                              input#commercialName.form-control(name='commercialName',size='20', type='text', value='#{suppliers.commercialName}', readonly=true)
+                        .form-group
+                          label.col-md-3.form-control-label(for='SSegment') Segment?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='business_segment', disabled=true)
+                                option(value='Farm', selected=suppliers.business_segment == 'Farm') Farm
+                                option(value='Process', selected=suppliers.business_segment == 'Process') Process
+                                option(value='Timber', selected=suppliers.business_segment == false) Timber
+                        .form-group
+                          label.form-control-label(for='statebusinesscode') State Tax Id.
+                          .controls
+                            .input-group
+                              input#statebusinesscode.form-control(name='statebusinesscode',size='100', type='text', value='#{suppliers.statebusinesscode}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='address1') Address
+                          .controls
+                            .input-group
+                              input#address1.form-control(name='address1',size='100', type='text', value='#{suppliers.address1}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='address2') Address Complement
+                          .controls
+                            .input-group
+                              input#address2.form-control(name='address2',size='100', type='text', value='#{suppliers.address2}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='zipcode') ZIP
+                          .controls
+                            .input-group
+                              input#zipcode.form-control(name='zipcode',size='16', type='text', value='#{suppliers.zipcode}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='district') District
+                          .controls
+                            .input-group
+                              input#district.form-control(name='district',size='100', type='text', value='#{suppliers.district}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='city') City
+                          .controls
+                            .input-group
+                              input#city.form-control(name='city',size='16', type='text', value='#{suppliers.city}', readonly=true)                                   
+                        .form-group
+                          label.form-control-label(for='province') State
+                          .controls
+                            .input-group
+                              input#province.form-control(name='province',size='16', type='text', value='#{suppliers.province}', readonly=true)
+                        .form-group
+                          label.form-control-label(for='country') Country
+                          .controls
+                            .input-group
+                              input#country.form-control(name='country',size='16', type='text', value='#{suppliers.country}', readonly=true)       
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='activeStatus', disabled=true)
+                                option(value='true', selected=suppliers.active == true) Yes
+                                option(value='false', selected=suppliers.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{suppliers.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/suppliers/edit/#{suppliers.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/suppliers')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to List                               

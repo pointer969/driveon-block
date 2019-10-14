@@ -1,0 +1,71 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Processing
+          li.breadcrumb-item.active Goods Confirmation
+        .container-fluid
+          .animated.fadeIn            
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-qrcode
+                      |  Goods Confirmation
+                    .card-body 
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button',onclick='getLotByTAGOF()')
+                                  i.fa.fa-search
+                                  |  Search
+                              input#tag.form-control(type='text ', name='tag', placeholder='TAG')              
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-info
+                      |  Lot Info.
+                    .card-body                                              
+                      != messages()
+                        .form-group
+                          label.form-control-label(for='lotnm') Lot No
+                          .controls
+                            .input-group
+                              input#lotnm.form-control(name='lotnm',size='100', type='text',readonly=true)
+                        .form-group
+                          label.form-control-label(for='pproduct') Product
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text',readonly=true) 
+                        .form-group
+                          label.form-control-label(for='tank') Fish Tank
+                          .controls
+                            .input-group
+                              input#tank.form-control(name='tank',size='100', type='text',readonly=true)
+                .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-cube
+                      |  Confirmation
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/processing/confirmation/save', method='post')
+                            input#lotid.form-control(name='lotid', type='hidden')
+                            input#product.form-control(name='product', type='hidden')                
+                            .form-group              
+                              label.form-control-label(for='q_in') Good Production
+                                  .controls
+                                    .input-group                                      
+                                      input#q_in.form-control-sm(name='q_in', type='number')                                  
+                            .form-actions
+                                button.btn.btn-sm.primary(type='submit') Save
+                                span
+                                a(href='/processing/goods/confirmation') 
+                                button.btn.btn-sm.secondary(type='button') Cancel                                                                                  

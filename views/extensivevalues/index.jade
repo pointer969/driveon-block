@@ -1,0 +1,55 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Extensive Value
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Extensive Value
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Class
+                            th Values
+                            th Description
+                            th Active
+                            th Created At                            
+                            th Modified At 
+                            th Modified By                            
+                        tbody                                                  
+                             each profile in list
+                              tr  
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/extensivevalues/delete/#{profile.id}', method='post')                                      
+                                      a(href='/extensivevalues/edit/#{profile.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove
+                                td #{profile.class.description}
+                                td #{profile.value}
+                                td #{profile.description} 
+                                td #{ativo = profile.active==true?'Yes':'No' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}                                                                                              
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/extensivevalues/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

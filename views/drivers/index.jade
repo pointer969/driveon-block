@@ -1,0 +1,47 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Drivers
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Drivers
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Actions
+                            th Driver License  
+                            th Name                            
+                            th Active                            
+                        tbody                                                  
+                             each driver in list
+                              tr
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/drivers/delete/#{driver.id}', method='post')                                      
+                                      a(href='/drivers/edit/#{driver.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove 
+                                td #{driver.driverlicense}
+                                td #{driver.name}  
+                                td #{ativo = driver.active==true?'Yes':'No' }                                                                                             
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/drivers/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') New

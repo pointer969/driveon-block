@@ -1,0 +1,17 @@
+{
+  "name": "un1ty",
+  "description": "Un1ty Web Platform",
+  "scripts": {
+  },
+  "env": {
+    "env": "dev"
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}

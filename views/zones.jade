@@ -1,0 +1,36 @@
+extends layout
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Segurança
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Zonas de Segurança
+                    .card-body                    
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Id do Map
+                            th Bairro
+                            th Zona
+                            th Risco
+                            th Pontuação
+                        tbody                                                  
+                             each zona in zonas
+                              tr
+                                td #{zona.mapid}
+                                td #{zona.district}
+                                td #{zona.zone}
+                                td #{zona.risk}
+                                td #{zona.ReducePoints}                           
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)                                    

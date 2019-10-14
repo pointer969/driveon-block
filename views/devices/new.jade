@@ -1,0 +1,91 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configuration
+          li.breadcrumb-item TAG
+          li.breadcrumb-item.active Register
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New TAG
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/devices/save', method='post')
+                        .form-group
+                          label.form-control-label(for='devicelbl') TAG
+                          .controls
+                            .input-group
+                              input#device.form-control(name='device',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='supplier') Supplier
+                          .controls
+                            .input-group
+                              input#supplier.form-control(name='supplier',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='supplier') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text')  
+                        .form-group
+                          label.form-control-label(for='firmware') Firmware
+                          .controls
+                            .input-group
+                              input#Firmware.form-control(name='firmware',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='version') Firmware Version
+                          .controls
+                            .input-group
+                              input#version.form-control(name='version',size='16', type='text') 
+                        .form-group
+                          label.form-control-label(for='version') SIM
+                          .controls
+                            .input-group
+                              input#versiosimnsimnumberumbern.form-control(name='simnumber',size='16', type='text')       
+                        .form-group
+                          label.form-control-label(for='sms_srv_addr') SMS Server IP 
+                          .controls
+                            .input-group
+                              input#sms_srv_addr.form-control(name='sms_srv_addr',size='16', type='text') 
+                        .form-group
+                          label.form-control-label(for='sms_srv_key') SMS Server Key
+                          .controls
+                            .input-group
+                              input#sms_srv_key.form-control(name='sms_srv_key',size='16', type='password')                  
+                        .form-group
+                          label.form-control-label(for='sms_apn') SMS APN
+                          .controls
+                            .input-group
+                              input#sms_apn.form-control(name='sms_apn',size='16', type='text')  
+                        .form-group
+                          label.form-control-label(for='sms_user') SMS User
+                          .controls
+                            .input-group
+                              input#sms_user.form-control(name='sms_user',size='16', type='text') 
+                        .form-group
+                          label.form-control-label(for='sms_password') SMS Password
+                          .controls
+                            .input-group
+                              input#sms_password.form-control(name='sms_password',size='16', type='password')  
+                        .form-group
+                          label.form-control-label(for='sms_set_ip') SMS IP
+                          .controls
+                            .input-group
+                              input#sms_set_ip.form-control(name='sms_set_ip',size='16', type='text')   
+                        .form-group
+                          label.form-control-label(for='sms_set_port') SMS Port
+                          .controls
+                            .input-group
+                              input#sms_set_port.form-control(name='sms_set_port',size='16', type='text') 
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/devices') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

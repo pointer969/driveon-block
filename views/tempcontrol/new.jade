@@ -1,0 +1,96 @@
+extends ../layout/default
+
+block content
+  main.main
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item #{pdesc}
+          li.breadcrumb-item.active Temperature Quality Control  
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      | Temperature Quality Control
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/processing/tempcontrol/save/#{ptype}', method='post')
+                        .form-group
+                          label.form-control-label(for='date') Date
+                          .controls
+                            .input-group
+                              #date.input-group.date
+                                input.form-control(type='text',name='date')
+                                span.input-group-addon
+                                  span.fa.fa-calendar
+                              script(type='text/javascript').
+                                $(function () {
+                                  $('#date').datetimepicker({
+                                    format: 'L',
+                                    icons: {
+                                        time: "fa fa-clock-o",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down"
+                                    }
+                                  });
+                                });
+                        .form-group
+                          label.form-control-label(for='time') Time
+                          .controls
+                            .input-group
+                              #time.input-group.date
+                                input.form-control(type='text', name='time')
+                                span.input-group-addon
+                                  span.fa.fa-calendar
+                              script(type='text/javascript').
+                                $(function () {
+                                  $('#time').datetimepicker({
+                                    format: 'LT',
+                                    icons: {
+                                        time: "fa fa-clock-o",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down"
+                                    }
+                                  });
+                                });  
+                        //- .form-group
+                        //-   label.form-control-label(for='sstate') Place
+                        //-   .controls
+                        //-     .input-group
+                        //-       input#placeid.form-control(name='placeid',size='100', type='text') 
+                        .form-group
+                            label.form-control-label(for='place') Place
+                            .controls
+                              .input-group
+                                select#placeid.form-control-sm(name='placeid')
+                                  if (places)
+                                    each place in places
+                                      option(value='#{place.value}') #{place.description} 
+                        .form-group
+                          label.form-control-label(for='temperature') temperature
+                          .controls
+                            .input-group
+                              input#temperature.form-control(name='temperature',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='status') Unit
+                          .controls
+                            .input-group
+                              select#unit.form-control-sm(name='unit')
+                                option(value='C') °C Celsius
+                                option(value='F') °F Fahrenheit                                                                                                                                         
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/processing/tempcontrol/#{ptype}') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

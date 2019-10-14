@@ -1,0 +1,48 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item.active Extensive Classes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  New Extensive Classes
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/extclasses/save', method='post')
+                        .form-group
+                          label.form-control-label(for='userProfile') Class
+                          .controls
+                            .input-group
+                              input#class.form-control(name='class',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(name='description',size='100', type='text') 
+                        .form-group
+                          label.form-control-label(for='userProfile') (%)
+                          .controls
+                            .input-group
+                              input#rate.form-control(name='rate',size='16', type='text')                                                                   
+                        .form-group
+                          label.form-control-label(for='activedYN') Active?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Yes
+                                option(value='false') No                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span
+                          a(href='/extclasses') 
+                           button.btn.btn-sm.secondary(type='button') Cancel                                                                       

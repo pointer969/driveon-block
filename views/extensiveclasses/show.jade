@@ -1,0 +1,63 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Settings
+          li.breadcrumb-item Configurations
+          li.breadcrumb-item Master Data
+          li.breadcrumb-item Extensive Classes
+          li.breadcrumb-item.active Details
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Extensive Classes - Details
+                    .card-body   
+                      != messages()  
+                      form.form-horizontal(action='/extclasses/delete/#{extclasses.id}', method='post') 
+                        .form-group
+                          label.form-control-label(for='class') Class
+                          .controls
+                            .input-group
+                              input#class.form-control(size='16', type='text', value='#{extclasses.class}', readonly=true)                       
+                        .form-group
+                          label.form-control-label(for='description') Description
+                          .controls
+                            .input-group
+                              input#description.form-control(size='100', type='text', value='#{extclasses.description}', readonly=true) 
+                        .form-group
+                          label.form-control-label(for='class') (%)
+                          .controls
+                            .input-group
+                              input#rate.form-control(size='16', type='text', value='#{extclasses.rate}', readonly=true)                                               
+                        .form-group
+                          label.col-md-3.form-control-label(for='activedYN') Active?
+                          .controls
+                            .col-md-9
+                              select#active.form-control-sm(name='active', disabled=true)
+                                option(value='true', selected=extclasses.active == true) Yes
+                                option(value='false', selected=extclasses.active == false) No
+                        .form-group
+                          label.form-control-label(for='createdAt') Created At
+                          .controls
+                            .input-group
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{extclasses.createdAt}')                                                                                                              
+                        .form-actions                          
+                          a(href='/extclasses/edit/#{extclasses.id}') 
+                            button.btn.btn-sm.btn-success(type='button')
+                              i.fa.fa-edit
+                              |  Edit   
+                            span    
+                          button.btn.btn-sm.btn-primary(type='submit')
+                            i.fa.fa-delicious
+                            |  Delete   
+                          span         
+                          a(href='/extclasses')                
+                            button.btn.btn-sm.btn-info(type='button')
+                              i.fa.fa-backward
+                              |  Back to list                              

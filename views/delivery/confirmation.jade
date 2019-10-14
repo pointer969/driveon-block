@@ -1,0 +1,71 @@
+extends ../layout/default
+
+block scripts
+  script(src='/js/effects.js')
+  script(src='/js/instascan.min.js')
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Delivery
+          li.breadcrumb-item.active Confirmation
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-qrcode
+                      |  New Confirmation
+                    .card-body 
+                        .form-group
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button',onclick='getSOByQR()')
+                                  i.fa.fa-qrcode
+                                  |  QR
+                              input#result.form-control(type='text', name='tag', placeholder='Order')  
+                        .form-group
+                          .controls
+                            .col-md-6
+                              .card
+                                .card-header
+                                  i.fa.fa-edit
+                                  |  Preview
+                                .card-body 
+                                  video#preview
+                                      //- script(type='text/javascript').
+                                      //-   let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                                      //-   scanner.addListener('scan', function (content) {
+                                      //-     console.log(content);
+                                      //-   });
+                                      //-   Instascan.Camera.getCameras().then(function (cameras) {
+                                      //-     if (cameras.length > 0) {
+                                      //-       scanner.start(cameras[0]);
+                                      //-     } else {
+                                      //-       console.error('No cameras found.');
+                                      //-     }
+                                      //-   }).catch(function (e) {
+                                      //-     console.error(e);
+                                      //-   });
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Result
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/delivery/confirmation/save', method='post')
+                        input#sono(name='sono',type='hidden')
+                        .form-group
+                          label.form-control-label(for='sonm') Validation
+                          .controls
+                            .input-group
+                              input#sonm.form-control(name='sonm',size='10', type='text', readonly=true)
+                       .form-actions
+                          button.btn.btn-sm.primary(type='submit') Save
+                          span                                                                     

@@ -1,0 +1,27 @@
+body { 
+    /* background: url(http://lorempixel.com/1920/1920/city/9/) no-repeat center center fixed;  */
+    background: url(/img/fundoimage.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  
+  .panel-default {
+    opacity: 0.9;
+    margin-top:30px;
+  }
+  .form-group.last { margin-bottom:0px; }
+
+  .panel-heading{    
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;    
+  }
+  
+  .img-avatar {
+    width: inherit;
+    max-width: 100%;
+    height: auto; 
+  }

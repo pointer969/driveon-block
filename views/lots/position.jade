@@ -1,0 +1,38 @@
+extends ../layout/default
+
+block scripts
+    script.view-script(type='text/javascript', src='js/google-maps.js')
+    script.view-script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?callback=InitMap&key=AIzaSyASyYRBZmULmrmw_P9kgr7_266OhFNinPA')
+block content
+  main.main
+        ol.breadcrumb
+          li.breadcrumb-item Management
+          li.breadcrumb-item Transport
+          li.breadcrumb-item.active Positions
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.fa.fa-qrcode
+                      |  Positions
+                    .card-body 
+                          .controls
+                            .input-group
+                              span.input-group-prepend
+                                button.btn.btn-primary(type='button')
+                                  i.fa.fa-search
+                                  |  TAG
+                              input#tag.form-control(type='password ', name='tag', placeholder='Lot')  
+            .row
+              .col-md-6
+                  .card
+                    .card-header
+                      i.icon-map
+                      |  Trace
+                    .card-body                                              
+                          #map(style='height: 360px; position: relative; overflow: hidden;') 
+                        .form-actions                          
+                          a(href='/processing/transport/print') 
+                           button.btn.btn-sm.secondary(type='button') Print                                                                                  
