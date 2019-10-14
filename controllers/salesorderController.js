@@ -47,7 +47,7 @@ exports.list = function (req, res) {
           // console.log('Return=>' + JSON.stringify(so))
           res.render('salesorders/index',
             {
-              title: 'Un1ty | Shipping',
+              title: 'DriveOn Blockchain | Shipping',
               list: so,
               user_info: req.user,
               baseuri: baseurl,
@@ -73,20 +73,20 @@ exports.list = function (req, res) {
                         .exec(function (err, customer) {
                           // console.log('Customer data=>'+ customer)
                           if (!err) {
-                            res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                            res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
                           } else {
                             req.flash('alert-danger', 'Fail to get customer data')
-                            res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                            res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
                           }
                         })
                     } else {
                       req.flash('alert-danger', 'Fail to get driver data')
-                      res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                      res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
                     }
                   })
               } else {
                 req.flash('alert-danger', 'Fail to get vehicle data')
-                res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
               }
             })
         }
@@ -99,7 +99,7 @@ exports.create = function (req, res) {
   var jday = moment().format('Y') + moment().format('DDDD');
   var sotk = getConfiguration('SOAutoRelease') == 'guid' ? short.uuid().toUpperCase() : jday;
 
-  // res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl });
+  // res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl });
   Vehicle
       .find({ 'active': true })
       .exec(function (err, vehicle) {
@@ -115,20 +115,20 @@ exports.create = function (req, res) {
                   .exec(function (err, customer) {
                     // console.log('Customer data=>'+ customer)
                     if (!err) {
-                      res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                      res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
                     } else {
                       req.flash('alert-danger', 'Fail to get customer data')
-                      res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                      res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
                     }
                   })
               } else {
                 req.flash('alert-danger', 'Fail to get driver data')
-                res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+                res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
               }
             })
         } else {
           req.flash('alert-danger', 'Fail to get vehicle data')
-          res.render('salesorders/new.jade', { title: 'Un1ty | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
+          res.render('salesorders/new.jade', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl, lotstatus: 'Outgoing', nextlot: sotk, customers: customer, drivers: driver, vehicles: vehicle });
         }
       })
 }
@@ -277,7 +277,7 @@ exports.save = function (req, res) {
     } else {
       req.flash('alert-info', 'Data saved with sucess!')
     }
-    res.render('salesorders/new', { title: 'Un1ty | New Shipping', baseuri: baseurl })
+    res.render('salesorders/new', { title: 'DriveOn Blockchain | New Shipping', baseuri: baseurl })
   })
 }
 

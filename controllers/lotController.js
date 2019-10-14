@@ -38,7 +38,7 @@ lotController.list = function(req, res) {
           Lot.count().exec(function(err, count){
               if (count > 0) {
                     res.render('lots/income',
-                    { title: 'Un1ty | Receive by TAG (Lakes)', 
+                    { title: 'DriveOn Blockchain | Receive by TAG (Lakes)', 
                         list: Lots,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -46,7 +46,7 @@ lotController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('lots/new.jade', { title: 'Un1ty | Receive by Manual (Lakes)',baseuri:baseurl});
+                    res.render('lots/new.jade', { title: 'DriveOn Blockchain | Receive by Manual (Lakes)',baseuri:baseurl});
                   }     
             });        
         })        
@@ -56,7 +56,7 @@ lotController.list = function(req, res) {
 
 lotController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('lots/new.jade', { title: 'Un1ty | Lot creation',baseuri:baseurl});
+    res.render('lots/new.jade', { title: 'DriveOn Blockchain | Lot creation',baseuri:baseurl});
  }   
  
 lotController.show = function(req, res){ 
@@ -199,7 +199,7 @@ lotController.save  =   function(req, res){
         req.flash('alert-info', 'Lot [' + lot.lotno + '] created with success!')  
         res.redirect('/receive/manual')
       }
-      res.render('lots/manual.jade', { title: 'Un1ty | New Lot', baseuri:baseurl});
+      res.render('lots/manual.jade', { title: 'DriveOn Blockchain | New Lot', baseuri:baseurl});
     })
  }
 
@@ -227,7 +227,7 @@ lotController.delete = function(req, res){
 lotController.search = function(req, res) {   
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
         res.render('lots/income',
-        { title: 'Un1ty | Incomming QC (Lakes)',             
+        { title: 'DriveOn Blockchain | Incomming QC (Lakes)',             
             user_info: req.user,
             baseuri: baseurl
           });
@@ -254,7 +254,7 @@ lotController.manual = function(req, res) {
                     Lot.count().exec(function(err, count){
                       var cnt = count+1;
                         res.render('lots/manual',
-                        { title: 'Un1ty | Receive by Manual (Lakes)',             
+                        { title: 'DriveOn Blockchain | Receive by Manual (Lakes)',             
                             user_info: req.user,
                             baseuri: baseurl,
                             products: product,
@@ -280,7 +280,7 @@ lotController.manual = function(req, res) {
 lotController.offflavor = function(req, res) {   
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
         res.render('lots/offflavor',
-        { title: 'Un1ty | Off-Flavor Quality Control (Lakes)',             
+        { title: 'DriveOn Blockchain | Off-Flavor Quality Control (Lakes)',             
             user_info: req.user,
             baseuri: baseurl
           });
@@ -324,7 +324,7 @@ lotController.saveoffflavor = function(req, res) {
         req.flash('alert-info', 'Lot [' + lot.lotno + '] updated with success!')  
       }
       res.render('lots/offflavor',
-        { title: 'Un1ty | Off-Flavor Quality Control (Lakes)',             
+        { title: 'DriveOn Blockchain | Off-Flavor Quality Control (Lakes)',             
             user_info: req.user,
             baseuri: baseurl
           });
@@ -379,7 +379,7 @@ lotController.saveoffflavor = function(req, res) {
           req.flash('alert-info', 'Lot [' + lot.lotno + '] updated with success!')  
         }
         res.render('lots/income',
-          { title: 'Un1ty | Incomming QC (Lakes)',             
+          { title: 'DriveOn Blockchain | Incomming QC (Lakes)',             
               user_info: req.user,
               baseuri: baseurl
             });
@@ -485,7 +485,7 @@ lotController.outcome = function(req, res) {
                     Lot.count().exec(function(err, count){
                       var cnt = count+1;
                         res.render('lots/outcome',
-                        { title: 'Un1ty | Shipping  (Lakes)',             
+                        { title: 'DriveOn Blockchain | Shipping  (Lakes)',             
                             user_info: req.user,
                             baseuri: baseurl,
                             products: product,
@@ -577,7 +577,7 @@ lotController.shipping  =   function(req, res){
         req.flash('alert-info', 'Lot [' + lot.lotno + '] created with success!')  
         res.redirect('/receive/manual')
       }
-      res.render('lots/manual.jade', { title: 'Un1ty | New Lot', baseuri:baseurl});
+      res.render('lots/manual.jade', { title: 'DriveOn Blockchain | New Lot', baseuri:baseurl});
     })
  }
 
@@ -601,7 +601,7 @@ lotController.confirmation = function(req, res) {
                   Lot.count().exec(function(err, count){
                     var cnt = count+1;
                       res.render('lots/goodreceive',
-                      { title: 'Un1ty | Confirmation (Lakes)',             
+                      { title: 'DriveOn Blockchain | Confirmation (Lakes)',             
                           user_info: req.user,
                           baseuri: baseurl,
                           products: product,
@@ -651,7 +651,7 @@ lotController.goodreceiveconfirmation = function(req, res)  {
         req.flash('alert-info', 'Lot confirmation saved with success!')  
         res.redirect('/processing/goods/confirmation')
       }
-      res.render('lots/goodreceive.jade', { title: 'Un1ty | Confirmation', baseuri:baseurl});
+      res.render('lots/goodreceive.jade', { title: 'DriveOn Blockchain | Confirmation', baseuri:baseurl});
     })
 }
 

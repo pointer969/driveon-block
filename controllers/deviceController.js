@@ -32,7 +32,7 @@ deviceController.list = function(req, res) {
           Device.count().exec(function(err, count){
               if (count > 0) {
                     res.render('devices/index',
-                    { title: 'Un1ty | TAG Activation', 
+                    { title: 'DriveOn Blockchain | TAG Activation', 
                         list: devices,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -40,7 +40,7 @@ deviceController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('devices/new.jade', { title: 'Un1ty | New TAG',baseuri:baseurl});
+                    res.render('devices/new.jade', { title: 'DriveOn Blockchain | New TAG',baseuri:baseurl});
                   }     
             });        
         })        
@@ -50,7 +50,7 @@ deviceController.list = function(req, res) {
 
 deviceController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('devices/new.jade', { title: 'Un1ty | New TAG',baseuri:baseurl});
+    res.render('devices/new.jade', { title: 'DriveOn Blockchain | New TAG',baseuri:baseurl});
  }   
  
 deviceController.show = function(req, res){ 
@@ -158,7 +158,7 @@ deviceController.save  =   function(req, res){
         req.flash('alert-info', 'Data saved with success!')  
         // res.redirect('/devices/show/'+device._id)
       }
-      res.render('devices/new.jade', { title: 'Un1ty | New TAG',baseuri:baseurl});
+      res.render('devices/new.jade', { title: 'DriveOn Blockchain | New TAG',baseuri:baseurl});
     })
  }
 
@@ -291,7 +291,7 @@ deviceController.setuplist = function(req, res){
       .find({active:true}, function(err, devices){
         Device.count().exec(function(err, count){            
                   res.render('devices/setup',
-                  { title: 'Un1ty | TAG Setup', 
+                  { title: 'DriveOn Blockchain | TAG Setup', 
                       list: devices,
                       user_info: req.user,
                       baseuri: baseurl,

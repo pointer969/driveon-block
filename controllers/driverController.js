@@ -26,7 +26,7 @@ exports.list = function(req, res) {
           Driver.count().exec(function(err, count){
               if (count > 0) {
                     res.render('drivers/index',
-                    { title: 'Un1ty | Drivers', 
+                    { title: 'DriveOn Blockchain | Drivers', 
                         list: drivers,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -34,7 +34,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('drivers/new.jade', {title: 'Un1ty | New Driver',baseuri:baseurl});
+                    res.render('drivers/new.jade', {title: 'DriveOn Blockchain | New Driver',baseuri:baseurl});
                   }     
             });        
         })
@@ -44,7 +44,7 @@ exports.list = function(req, res) {
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('drivers/new.jade', { title: 'Un1ty | New Driver',baseuri:baseurl});
+    res.render('drivers/new.jade', { title: 'DriveOn Blockchain | New Driver',baseuri:baseurl});
  };   
  
 exports.show = function(req, res){ 
@@ -142,7 +142,7 @@ exports.save  =   function(req, res){
                req.flash('alert-danger', "Error on save:"+ err)  
                break;
         }        
-        res.render('drivers/new', { title: 'Un1ty | New Supplier', baseuri:baseurl})
+        res.render('drivers/new', { title: 'DriveOn Blockchain | New Supplier', baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Data saved with sucess!')  
         res.redirect('/drivers/show/'+supplier._id)

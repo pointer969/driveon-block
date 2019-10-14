@@ -41,7 +41,7 @@ var vehicleController = {}
           Vehicle.count().exec(function(err, count){
               if (count > 0) {
                     res.render('vehicles/index',
-                    { title: 'Un1ty | Vehicle', 
+                    { title: 'DriveOn Blockchain | Vehicle', 
                         list: vehicles,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -75,7 +75,7 @@ var vehicleController = {}
                                             break;
                                       }   
                                     }else{                                    
-                                              res.render('vehicles/new.jade', { title: 'Un1ty | New Vehicle',
+                                              res.render('vehicles/new.jade', { title: 'DriveOn Blockchain | New Vehicle',
                                                   baseuri: baseurl,
                                                   devices: device,
                                                   customers: customer
@@ -119,7 +119,7 @@ var vehicleController = {}
                       break;
                 }   
               }else{                                    
-                        res.render('vehicles/new.jade', { title: 'Un1ty | New Vehicle',
+                        res.render('vehicles/new.jade', { title: 'DriveOn Blockchain | New Vehicle',
                             baseuri: baseurl,
                             devices: device,
                             customers: customer
@@ -217,7 +217,7 @@ var vehicleController = {}
                                             req.flash('alert-danger', "Error on edit:"+ err)  
                                             
                                     }else{                                    
-                                              res.render('vehicles/edit', { title: 'Un1ty | New Vehicle',
+                                              res.render('vehicles/edit', { title: 'DriveOn Blockchain | New Vehicle',
                                                   baseuri: baseurl,
                                                   devices: device,
                                                   customers: customer,
@@ -315,7 +315,7 @@ var vehicleController = {}
                                       break;
                                 }   
                               }else{                                    
-                                    res.render('vehicles/edit', { title: 'Un1ty | New Vehicle',
+                                    res.render('vehicles/edit', { title: 'DriveOn Blockchain | New Vehicle',
                                         baseuri: baseurl,
                                         devices: device,
                                         customers: customer,
@@ -367,7 +367,7 @@ var vehicleController = {}
               .exec(function(err, vehicles){
                 Vehicle.count().exec(function(err, count){                    
                           res.render('vehicles/alarms',
-                          { title: 'Un1ty Integrator | Alarmes', 
+                          { title: 'DriveOn Blockchain Integrator | Alarmes', 
                               list: vehicles,
                               user_info: req.user,
                               baseuri: baseurl,
@@ -394,7 +394,7 @@ var vehicleController = {}
               .exec(function(err, vehicles){
                 Vehicle.count().exec(function(err, count){                    
                           res.render('analytics',
-                          { title: 'Un1ty Integrator', 
+                          { title: 'DriveOn Blockchain Integrator', 
                               list: vehicles,
                               user_info: req.user,
                               baseuri: baseurl,

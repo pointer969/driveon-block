@@ -28,7 +28,7 @@ extensiveclassController.list = function (req, res) {
         if (count > 0) {
           res.render('extensiveclasses/index',
             {
-              title: 'Un1ty | Extensive Classes',
+              title: 'DriveOn Blockchain | Extensive Classes',
               list: extensiveclasses,
               user_info: req.user,
               baseuri: baseurl,
@@ -37,7 +37,7 @@ extensiveclassController.list = function (req, res) {
             }
           );
         } else {
-          res.render('extensiveclasses/new.jade', { title: 'Un1ty | New Class', baseuri: baseurl });
+          res.render('extensiveclasses/new.jade', { title: 'DriveOn Blockchain | New Class', baseuri: baseurl });
         }
       });
     })
@@ -47,7 +47,7 @@ extensiveclassController.list = function (req, res) {
 
 extensiveclassController.create = function (req, res) {
   var baseurl = req.protocol + "://" + req.get('host') + "/"
-  res.render('extensiveclasses/new.jade', { title: 'Un1ty | New Class', baseuri: baseurl });
+  res.render('extensiveclasses/new.jade', { title: 'DriveOn Blockchain | New Class', baseuri: baseurl });
 }
 
 extensiveclassController.show = function (req, res) {
@@ -138,11 +138,11 @@ extensiveclassController.save = function (req, res) {
           req.flash('alert-danger', "Error on save:" + err)
           break;
       }
-      res.render('extensiveclasses/new.jade', { title: 'Un1ty | New Class', baseuri: baseurl })
+      res.render('extensiveclasses/new.jade', { title: 'DriveOn Blockchain | New Class', baseuri: baseurl })
     } else {
       res.redirect('/extclasses/show/' + extclass._id)
     }
-    res.render('extensiveclasses/new.jade', { title: 'Un1ty | New Class', baseuri: baseurl })
+    res.render('extensiveclasses/new.jade', { title: 'DriveOn Blockchain | New Class', baseuri: baseurl })
   })
 }
 

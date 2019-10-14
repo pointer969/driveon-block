@@ -34,7 +34,7 @@ lotTrackingController.list = function (req, res) {
                   if (count > 0) {
                     res.render('lots/position',
                       {
-                        title: 'Un1ty | Positions',
+                        title: 'DriveOn Blockchain | Positions',
                         list: Lots,
                         user_info: req.user,
                         suppliers: suppliers,
@@ -45,7 +45,7 @@ lotTrackingController.list = function (req, res) {
                       }
                     )
                   } else {
-                    res.render('lots/newposition.jade', { title: 'Un1ty | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
+                    res.render('lots/newposition.jade', { title: 'DriveOn Blockchain | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
                   }
                 });
               })
@@ -66,7 +66,7 @@ lotTrackingController.create = function (req, res) {
       if (!err) {
         Vehicle.find({}, function (err, vehicles) {
           if (!err) {
-            res.render('lots/newposition', { title: 'Un1ty | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
+            res.render('lots/newposition', { title: 'DriveOn Blockchain | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
           }
         })
       }
@@ -176,7 +176,7 @@ lotTrackingController.save = function (req, res) {
         if (!err) {
           Vehicle.find({}, function (err, vehicles) {
             if (!err) {
-              res.render('lots/newposition', { title: 'Un1ty | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
+              res.render('lots/newposition', { title: 'DriveOn Blockchain | Add Position', baseuri: baseurl, suppliers: suppliers, vehicles: vehicles });
             }
           })
         }
@@ -223,7 +223,7 @@ lotTrackingController.tracking = function (req, res) {
                 LotTracking.count().exec(function (err, count) {
                   res.render('lots/tracking',
                     {
-                      title: 'Un1ty | Tracking',
+                      title: 'DriveOn Blockchain | Tracking',
                       list: Lots,
                       user_info: req.user,
                       suppliers: suppliers,

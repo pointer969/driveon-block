@@ -27,7 +27,7 @@ pwqcController.list = function(req, res) {
           pwqc.count().exec(function(err, count){
               if (count > 0) {
                     res.render('watercontrol/index',
-                    { title: 'Un1ty | Water Quality Control', 
+                    { title: 'DriveOn Blockchain | Water Quality Control', 
                         list: wqc,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -35,7 +35,7 @@ pwqcController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                     res.render('watercontrol/new', { title: 'Un1ty | New Water QC Input',baseuri:baseurl});
+                     res.render('watercontrol/new', { title: 'DriveOn Blockchain | New Water QC Input',baseuri:baseurl});
                   }
             });        
         })  
@@ -47,7 +47,7 @@ pwqcController.list = function(req, res) {
 pwqcController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
     console.log('Entrou create'); 
-    res.render('watercontrol/new.jade', { title: 'Un1ty | New Water QC Input',baseuri:baseurl});
+    res.render('watercontrol/new.jade', { title: 'DriveOn Blockchain | New Water QC Input',baseuri:baseurl});
  }   
  
 pwqcController.show = function(req, res){ 
@@ -58,7 +58,7 @@ pwqcController.show = function(req, res){
           req.flash('alert-danger', "Error on Show:"+ err)                
         } else {     
           req.flash('alert-info', 'Data Saved!')       
-          res.render('watercontrol/show', { title: 'Un1ty | New Water QC Input', wqclist: wqc, baseuri:baseurl});
+          res.render('watercontrol/show', { title: 'DriveOn Blockchain | New Water QC Input', wqclist: wqc, baseuri:baseurl});
         }
       });
   } else {    
@@ -80,7 +80,7 @@ pwqcController.edit = function(req, res){
                  break;
           }   
         } else {          
-          res.render('watercontrol/edit', { title: 'Un1ty | New Water QC Input', wqclist: upwqc, baseuri:baseurl});
+          res.render('watercontrol/edit', { title: 'DriveOn Blockchain | New Water QC Input', wqclist: upwqc, baseuri:baseurl});
         }
       })
  }
@@ -112,7 +112,7 @@ pwqcController.update = function(req, res){
                  req.flash('alert-danger', "Error on update:"+ err)  
                  break;
           }   
-          res.render("watercontrol/edit", { title: 'Un1ty | New Water QC Input',wqclist: req.body, baseuri:baseurl})
+          res.render("watercontrol/edit", { title: 'DriveOn Blockchain | New Water QC Input',wqclist: req.body, baseuri:baseurl})
         }else{          
           res.redirect("/processing/watercontrol/show/"+profile._id)
         }
@@ -138,7 +138,7 @@ pwqcController.save  =   function(req, res){
       } else {          
         res.redirect('/processing/watercontrol/show/'+wqc._id)
       }
-      res.render('watercontrol/new.jade', { title: 'Un1ty | New Water QC Input', baseuri:baseurl});
+      res.render('watercontrol/new.jade', { title: 'DriveOn Blockchain | New Water QC Input', baseuri:baseurl});
     })
  }
 

@@ -26,7 +26,7 @@ exports.list = function(req, res) {
           Customer.count().exec(function(err, count){
               if (count > 0) {
                     res.render('customers/index',
-                    { title: 'Un1ty | Customers', 
+                    { title: 'DriveOn Blockchain | Customers', 
                         list: customers,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -34,7 +34,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('customers/new.jade', {title: 'Un1ty | New Customer',baseuri:baseurl});
+                    res.render('customers/new.jade', {title: 'DriveOn Blockchain | New Customer',baseuri:baseurl});
                   }     
             });        
         })
@@ -44,7 +44,7 @@ exports.list = function(req, res) {
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('customers/new.jade', { title: 'Un1ty | New Customer',baseuri:baseurl});
+    res.render('customers/new.jade', { title: 'DriveOn Blockchain | New Customer',baseuri:baseurl});
  };   
  
 exports.show = function(req, res){ 
@@ -151,7 +151,7 @@ exports.save  =   function(req, res){
                req.flash('alert-danger', "Error on save:"+ err)  
                break;
         }        
-        res.render('customers/new', { title: 'Un1ty | New Customer', baseuri:baseurl})
+        res.render('customers/new', { title: 'DriveOn Blockchain | New Customer', baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Data saved with sucess!')  
         res.redirect('/customers/show/'+customer._id)

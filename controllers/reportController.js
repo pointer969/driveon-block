@@ -45,7 +45,7 @@ var getLotFilter = function(query) {
 /* Pivot Table */
 /***********************/
 reportController.pivot = function(req, res) {        
-    res.render('reports/pivot',  { user: req.user, title:  'Un1ty | Pivot'});
+    res.render('reports/pivot',  { user: req.user, title:  'DriveOn Blockchain | Pivot'});
   };
 
 reportController.lots = function(req, res) {        

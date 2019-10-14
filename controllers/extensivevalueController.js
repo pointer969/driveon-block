@@ -38,7 +38,7 @@ extensivevalueController.list = function(req, res) {
               if (count > 0) {
                   // console.log('Debug:' + extensivevalues)
                     res.render('extensivevalues/index',
-                    { title: 'Un1ty | Extensive Values', 
+                    { title: 'DriveOn Blockchain | Extensive Values', 
                         list: extensivevalues,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -51,7 +51,7 @@ extensivevalueController.list = function(req, res) {
                       if (err) {         
                         req.flash('alert-danger', "Error on show:"+ err)                
                       } else { 
-                        res.render('extensivevalues/new.jade', { title: 'Un1ty | New Value', extvalueses: extvalues, baseuri:baseurl})
+                        res.render('extensivevalues/new.jade', { title: 'DriveOn Blockchain | New Value', extvalueses: extvalues, baseuri:baseurl})
                       }  
 
                     })  
@@ -68,7 +68,7 @@ extensivevalueController.create = function(req, res){
     if (err) {         
       req.flash('alert-danger', "Error on show:"+ err)                
     } else { 
-      res.render('extensivevalues/new.jade', { title: 'Un1ty | New Value', extvalueses: extvalues, baseuri:baseurl})
+      res.render('extensivevalues/new.jade', { title: 'DriveOn Blockchain | New Value', extvalueses: extvalues, baseuri:baseurl})
     }  
    
   })  
@@ -178,7 +178,7 @@ extensivevalueController.save  =   function(req, res){
           if (err) {         
             req.flash('alert-danger', "Error on show:"+ err)                
           } else { 
-            res.render('extensivevalues/new.jade', { title: 'Un1ty | New Value', extvalueses: extvalues, baseuri:baseurl})
+            res.render('extensivevalues/new.jade', { title: 'DriveOn Blockchain | New Value', extvalueses: extvalues, baseuri:baseurl})
           }  
          
         })  
@@ -191,7 +191,7 @@ extensivevalueController.save  =   function(req, res){
         if (err) {         
           req.flash('alert-danger', "Error on Show:"+ err)                
         } else { 
-          res.render('extensivevalues/new.jade', { title: 'Un1ty | New Value', extvalueses: extvalues, baseuri:baseurl})
+          res.render('extensivevalues/new.jade', { title: 'DriveOn Blockchain | New Value', extvalueses: extvalues, baseuri:baseurl})
         }  
        
       })  

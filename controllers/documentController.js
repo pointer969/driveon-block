@@ -26,7 +26,7 @@ exports.list = function(req, res) {
           Document.count().exec(function(err, count){
               if (count > 0) {
                     res.render('documents/index',
-                    { title: 'Un1ty | Compliance Files', 
+                    { title: 'DriveOn Blockchain | Compliance Files', 
                         list: documents,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -34,7 +34,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('documents/new.jade', {title: 'Un1ty | New File',baseuri:baseurl});
+                    res.render('documents/new.jade', {title: 'DriveOn Blockchain | New File',baseuri:baseurl});
                   }     
             });        
         })
@@ -44,7 +44,7 @@ exports.list = function(req, res) {
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('documents/new.jade', { title: 'Un1ty | New File',baseuri:baseurl});
+    res.render('documents/new.jade', { title: 'DriveOn Blockchain | New File',baseuri:baseurl});
  };   
  
 exports.show = function(req, res){ 
@@ -130,11 +130,11 @@ exports.save  =   function(req, res){
   upload(req, res,(error) => {
     if(error){
       req.flash('alert-danger', 'Invalid file type. Only JPG, PNG or GIF file are allowed. Detal:' + error) 
-      res.render('documents/new', { title: 'Un1ty | New File', baseuri:baseurl})
+      res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri:baseurl})
     }  else {
       if(req.file == undefined){
         req.flash('alert-danger', 'File size too large.') 
-        res.render('documents/new', { title: 'Un1ty | New File', baseuri:baseurl})
+        res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri:baseurl})
       }else{
           var fullPath = "files/"+req.file.filename;
           
@@ -158,7 +158,7 @@ exports.save  =   function(req, res){
                      req.flash('alert-danger', "Error on save:"+ err)  
                      break;
               }        
-              res.render('documents/new', { title: 'Un1ty | New File', baseuri:baseurl})
+              res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri:baseurl})
             } else {          
               req.flash('alert-info', 'Data saved with sucess!')  
               res.redirect('/documents/show/'+document._id)

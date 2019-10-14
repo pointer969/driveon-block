@@ -27,7 +27,7 @@ exports.list = function (req, res) {
         if (count > 0) {
           res.render('delivery/index',
             {
-              title: 'Un1ty | Deliveries',
+              title: 'DriveOn Blockchain | Deliveries',
               list: documents,
               user_info: req.user,
               baseuri: baseurl,
@@ -36,7 +36,7 @@ exports.list = function (req, res) {
             }
           );
         } else {
-          res.render('documents/new.jade', { title: 'Un1ty | New File', baseuri: baseurl });
+          res.render('documents/new.jade', { title: 'DriveOn Blockchain | New File', baseuri: baseurl });
         }
       });
     })
@@ -60,7 +60,7 @@ exports.list = function (req, res) {
 //         if (count > 0) {
 //           res.render('delivery/confirmation',
 //             {
-//               title: 'Un1ty | Confirmation',
+//               title: 'DriveOn Blockchain | Confirmation',
 //               list: documents,
 //               user_info: req.user,
 //               baseuri: baseurl,
@@ -69,7 +69,7 @@ exports.list = function (req, res) {
 //             }
 //           );
 //         } else {
-//           res.render('documents/new.jade', { title: 'Un1ty | New File', baseuri: baseurl });
+//           res.render('documents/new.jade', { title: 'DriveOn Blockchain | New File', baseuri: baseurl });
 //         }
 //       });
 //     })
@@ -79,7 +79,7 @@ exports.list = function (req, res) {
 
 exports.confirmation = function (req, res) {
   var baseurl = req.protocol + "://" + req.get('host') + "/"
-  res.render('delivery/confirmation', { title: 'Un1ty | New Confirmation', baseuri: baseurl });
+  res.render('delivery/confirmation', { title: 'DriveOn Blockchain | New Confirmation', baseuri: baseurl });
 };
 
 exports.show = function (req, res) {
@@ -163,11 +163,11 @@ exports.save = function (req, res) {
   upload(req, res, (error) => {
     if (error) {
       req.flash('alert-danger', 'Invalid file type. Only JPG, PNG or GIF file are allowed. Detal:' + error)
-      res.render('documents/new', { title: 'Un1ty | New File', baseuri: baseurl })
+      res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri: baseurl })
     } else {
       if (req.file == undefined) {
         req.flash('alert-danger', 'File size too large.')
-        res.render('documents/new', { title: 'Un1ty | New File', baseuri: baseurl })
+        res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri: baseurl })
       } else {
         var fullPath = "files/" + req.file.filename;
 
@@ -190,7 +190,7 @@ exports.save = function (req, res) {
                 req.flash('alert-danger', "Error on save:" + err)
                 break;
             }
-            res.render('documents/new', { title: 'Un1ty | New File', baseuri: baseurl })
+            res.render('documents/new', { title: 'DriveOn Blockchain | New File', baseuri: baseurl })
           } else {
             req.flash('alert-info', 'Data saved with sucess!')
             res.redirect('/documents/show/' + document._id)

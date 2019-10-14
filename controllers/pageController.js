@@ -13,7 +13,7 @@ exports.main = function(req, res) {
 }
 
 exports.login = function(req, res) {    
-  req.flash('loginMessage','Bem vindo a Un1ty!')
+  req.flash('loginMessage','Bem vindo a DriveOn Blockchain!')
   res.render('login', { title: 'Drive.On'}) 
 }
 

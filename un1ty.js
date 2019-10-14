@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Passport middleware Scope******************************************************************
 app.use(session({
-        secret: 'un1tyshadow', 
+        secret: 'DriveOn Blockchainshadow', 
         saveUninitialized: false, 
         resave:false
         }))

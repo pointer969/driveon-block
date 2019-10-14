@@ -30,7 +30,7 @@ productController.list = function(req, res) {
           Product.count().exec(function(err, count){
               if (count > 0) {
                     res.render('products/index',
-                    { title: 'Un1ty | Products', 
+                    { title: 'DriveOn Blockchain | Products', 
                         list: products,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -39,7 +39,7 @@ productController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('products/new.jade', { title: 'Un1ty | New Product',baseuri:baseurl, specieslist:species});
+                    res.render('products/new.jade', { title: 'DriveOn Blockchain | New Product',baseuri:baseurl, specieslist:species});
                   }     
             });        
         })        
@@ -61,7 +61,7 @@ productController.create = function(req, res){
     //       var message0 =  {"species": spec, "description": specdesc }
     //       arrayRet.push(message0)
     //     }
-    //     res.render('products/new.jade', { title: 'Un1ty | New Product', baseuri:baseurl, specieslist:arrayRet})
+    //     res.render('products/new.jade', { title: 'DriveOn Blockchain | New Product', baseuri:baseurl, specieslist:arrayRet})
     //   })
     // })    
      var message0 =  {"species": "Tilapia", "description": "Tilapia" }
@@ -72,7 +72,7 @@ productController.create = function(req, res){
      arrayRet.push(message0) 
      var message0 =  {"species": "Pintado", "description": "Pintado" }
      arrayRet.push(message0) 
-    res.render('products/new.jade', { title: 'Un1ty | New Product', baseuri:baseurl, specieslist:arrayRet})
+    res.render('products/new.jade', { title: 'DriveOn Blockchain | New Product', baseuri:baseurl, specieslist:arrayRet})
  }   
  
 productController.show = function(req, res){ 
@@ -182,7 +182,7 @@ productController.save  =   function(req, res){
         // req.flash('alert-info', 'Dados salvos com sucesso!')  
         res.redirect('/products/show/'+product._id)
       }
-      res.render('products/new.jade', { title: 'Un1ty | New Product', baseuri:baseurl});
+      res.render('products/new.jade', { title: 'DriveOn Blockchain | New Product', baseuri:baseurl});
     })
  }
 

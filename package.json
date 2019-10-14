@@ -1,9 +1,9 @@
 {
-  "name": "un1ty",
+  "name": "DriveOn Blockchain",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node un1ty.js"
+    "start": "node DriveOn Blockchain.js"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -58,18 +58,18 @@
     "yield": "0.0.6-8"
   },
   "description": "This project is created from a GitLab [Project Template](https://docs.gitlab.com/ce/gitlab-basics/create-project.html)",
-  "main": "un1ty.js",
+  "main": "DriveOn Blockchain.js",
   "directories": {
     "lib": "lib"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/marcelo_s_almeida/un1tyweb.git"
+    "url": "git+https://gitlab.com/marcelo_s_almeida/DriveOn Blockchainweb.git"
   },
   "author": "MSA",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/marcelo_s_almeida/un1tyweb/issues"
+    "url": "https://gitlab.com/marcelo_s_almeida/DriveOn Blockchainweb/issues"
   },
-  "homepage": "https://gitlab.com/marcelo_s_almeida/un1tyweb#readme"
+  "homepage": "https://gitlab.com/marcelo_s_almeida/DriveOn Blockchainweb#readme"
 }

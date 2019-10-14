@@ -54,7 +54,7 @@ twqcController.list = function (req, res) {
         if (count > 0) {
           res.render('tempcontrol/index',
             {
-              title: 'Un1ty | Temperature Quality Control',
+              title: 'DriveOn Blockchain | Temperature Quality Control',
               list: wqc,   
               ptype: pid,    
               pdesc: pdescription,       
@@ -65,22 +65,22 @@ twqcController.list = function (req, res) {
             }
           );
         } else {
-          // res.render('tempcontrol/new', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl,places: place });
+          // res.render('tempcontrol/new', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl,places: place });
           ExtensiveClass.findOne({ class: pid, active: true })
           .exec(function (err, exclass) {
             if (!err) {
               ExtensiveValue.findOne({ class: exclass._id, active: true })          
                 .exec(function (err, values) {
                   if (!err) {
-                    res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
+                    res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
                   } else {
                     req.flash('alert-danger', "Error on Load Values:" + err)
-                    res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
+                    res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
                   }
                 })
             } else {
               req.flash('alert-danger', "Error on Load Classes:" + err)
-              res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });      
+              res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });      
             }
           })
         }
@@ -118,15 +118,15 @@ twqcController.create = function (req, res) {
           .exec(function (err, values) {
             // console.log('ExtensiveValue:' + JSON.stringify(values));
             if (!err) {
-              res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
+              res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
             } else {
               req.flash('alert-danger', "Error on Load Values:" + err)
-              res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
+              res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: values, pdesc:pdescription, ptype:pid });
             }
           })
       } else {
         req.flash('alert-danger', "Error on Load Classes:" + err)
-        res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl, places: '', pdesc:pdescription, ptype:pid });      
+        res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl, places: '', pdesc:pdescription, ptype:pid });      
       }
     })
  }
@@ -139,7 +139,7 @@ twqcController.show = function (req, res) {
         req.flash('alert-danger', "Error on Show:" + err)
       } else {
         req.flash('alert-info', 'Data Saved!')
-        res.render('tempcontrol/show', { title: 'Un1ty | New Temperature QC Input', tqclist: tqc, baseuri: baseurl });
+        res.render('tempcontrol/show', { title: 'DriveOn Blockchain | New Temperature QC Input', tqclist: tqc, baseuri: baseurl });
       }
     });
   } else {
@@ -160,7 +160,7 @@ twqcController.edit = function (req, res) {
           break;
       }
     } else {
-      res.render('tempcontrol/edit', { title: 'Un1ty | New Temperature QC Input', tqclist: uptqc, baseuri: baseurl });
+      res.render('tempcontrol/edit', { title: 'DriveOn Blockchain | New Temperature QC Input', tqclist: uptqc, baseuri: baseurl });
     }
   })
  }
@@ -191,7 +191,7 @@ twqcController.update = function (req, res) {
             req.flash('alert-danger', "Error on update:" + err)
             break;
         }
-        res.render("tempcontrol/edit", { title: 'Un1ty | New Temperature QC Input', tqclist: req.body, baseuri: baseurl })
+        res.render("tempcontrol/edit", { title: 'DriveOn Blockchain | New Temperature QC Input', tqclist: req.body, baseuri: baseurl })
       } else {
         res.redirect("/processing/tempcontrol/show/" + profile._id)
       }
@@ -217,7 +217,7 @@ twqcController.save = function (req, res) {
     } else {
       res.redirect('/processing/tempcontrol/show/'+ pid +'/' + wqc._id)
     }
-    res.render('tempcontrol/new.jade', { title: 'Un1ty | New Temperature QC Input', baseuri: baseurl });
+    res.render('tempcontrol/new.jade', { title: 'DriveOn Blockchain | New Temperature QC Input', baseuri: baseurl });
   })
  }
 
