@@ -8,20 +8,20 @@ exports.main = function(req, res) {
     var lastday = new Date(curr.setDate(last)).toLocaleDateString('pt-BR');
 
     res.render('index', { 
-        title: 'Un1ty.io', params:{CurWStart:firstday, CurWEnd:lastday} 
+        title: 'Drive.On', params:{CurWStart:firstday, CurWEnd:lastday} 
     }) 
 }
 
 exports.login = function(req, res) {    
   req.flash('loginMessage','Bem vindo a Un1ty!')
-  res.render('login', { title: 'Un1ty.io'}) 
+  res.render('login', { title: 'Drive.On'}) 
 }
 
 
 exports.locate = function(req, res) {
   console.log ('locate')
   res.render('locate', {
-    title: 'Un1ty.io | Localizar'
+    title: 'Drive.On | Localizar'
   })
 }
 
@@ -29,7 +29,7 @@ exports.myvehicle = function(req, res) {
   console.log ('lasttrips')
   
   res.render('lasttrips', {
-    title: 'Un1ty.io | Último trajeto'
+    title: 'Drive.On | Último trajeto'
   })
 }
 
@@ -37,14 +37,14 @@ exports.alarmes = function(req, res) {
   console.log ('alarmes')
   
   res.render('ealarms', {
-    title: 'Un1ty.io | Alarmes'
+    title: 'Drive.On | Alarmes'
   })
 }
 
 exports.analytics = function(req, res) {
   console.log ('analytics')  
   res.render('analytics', { 
-    title: 'Un1ty.io | Analytics'
+    title: 'Drive.On | Analytics'
   }) 
 }
 
