@@ -1,9 +1,9 @@
 {
-  "name": "DriveOn Blockchain",
+  "name": "driveon_blockchain",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node DriveOn Blockchain.js"
+    "start": "node un1ty.js"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
